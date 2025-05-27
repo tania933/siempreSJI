@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>
+   Portal Contribuyentes | San José de Iturbide
+  </title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&amp;family=Playfair+Display:wght@500&amp;display=swap" rel="stylesheet"/>
+<style>
+   :root {
+            --vino: #722f37;
+            --vino-oscuro: #5a232a;
+            --ocre: #c3a668;
+            --ocre-claro: #e8d9b5;
+            --beige: #f5f0e6;
+            --gris-oscuro: #333333;
+            --success: #4a8c5e;
+            --warning: #d4a017;
+            --danger: #c1554a;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--beige);
+            color: var(--gris-oscuro);
+            line-height: 1.6;
+        }
+        
+        .app-container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            background-color: var(--vino);
+            color: white;
+            padding: 1.5rem 0;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+        }
+        
+        .logo {
+            text-align: center;
+            padding: 0 1rem 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .municipio-logo {
+            font-family: 'Playfair Display', serif;
+            color: white;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        
+        .municipio-logo h2 {
+            font-size: 1.2rem;
+            line-height: 1.3;
+            margin-bottom: 0.3rem;
+        }
+        
+        .municipio-logo p {
+            font-size: 0.7rem;
+            color: var(--ocre);
+            font-style: italic;
+        }
+        
+        .escudo-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .escudo {
+            width: 80px;
+            height: 80px;
+            background-color: var(--ocre-claro);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid var(--ocre);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .escudo i {
+            font-size: 2rem;
+            color: var(--vino);
+        }
+        
+        .nav-menu {
+            margin-top: 2rem;
+        }
+        
+        .nav-item {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            border-left: 3px solid transparent;
+        }
+        
+        .nav-item:hover {
+            background-color: rgba(255,255,255,0.1);
+            border-left: 3px solid var(--ocre);
+        }
+        
+        .nav-item.active {
+            background-color: var(--vino-oscuro);
+            border-left: 3px solid var(--ocre);
+        }
+        
+        .nav-item i {
+            margin-right: 0.8rem;
+            width: 20px;
+            text-align: center;
+            color: var(--ocre);
+        }
+        
+        /* Main Content */
+        .main-content {
+            padding: 1.5rem;
+            background-color: white;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--vino);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background-color: white;
+            border-radius: 4px;
+            padding: 0.5rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            width: 300px;
+            border: 1px solid #ddd;
+        }
+        
+        .search-bar input {
+            border: none;
+            outline: none;
+            padding: 0.5rem;
+            width: 100%;
+            background-color: transparent;
+        }
+        
+        .search-bar i {
+            color: var(--vino);
+            margin: 0 0.5rem;
+        }
+        
+        /* Feature Cards */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .feature-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-left: 4px solid var(--ocre);
+            transition: all 0.3s ease;
+            border: 1px solid #eee;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .feature-title {
+            font-weight: 500;
+            color: var(--vino);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            font-size: 1.1rem;
+        }
+        
+        .feature-title i {
+            margin-right: 0.7rem;
+            color: var(--ocre);
+        }
+        
+        .feature-description {
+            color: #555;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .feature-number {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--vino);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .feature-highlight {
+            background-color: var(--ocre-claro);
+            padding: 0.8rem;
+            border-radius: 6px;
+            margin-top: 1rem;
+            border-left: 3px solid var(--ocre);
+        }
+        
+        .feature-highlight-title {
+            font-weight: 500;
+            color: var(--vino);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .feature-highlight-content {
+            color: #555;
+            font-size: 0.9rem;
+        }
+        
+        /* Login Section */
+        .login-section {
+            max-width: 500px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .login-title {
+            text-align: center;
+            color: var(--vino);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--vino);
+            font-weight: 500;
+        }
+        
+        .form-group input, 
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--vino);
+            color: white;
+            width: 100%;
+            justify-content: center;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--vino-oscuro);
+        }
+        
+        .login-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.8rem;
+            color: #777;
+        }
+
+        /* Estilos para mensajes de error */
+        .error-message {
+            color: var(--danger);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .app-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: -250px;
+                width: 250px;
+                height: 100vh;
+                z-index: 1000;
+                transition: left 0.3s ease;
+            }
+            
+            .sidebar.show {
+                left: 0;
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+            
+            .search-bar {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+  </style>
+</head>
+<body>
+<div class="app-container">
+<!-- Sidebar -->
+<div class="sidebar">
+<div class="logo">
+<div class="municipio-logo">
+<h2>
+       Município de
+       <br/>
+       San José
+       <br/>
+       de Iturbide
+      </h2>
+<p>
+       ¡Unidos por la Paz!
+      </p>
+</div>
+<div class="escudo-container">
+<div class="escudo">
+<i class="fas fa-landmark">
+</i>
+</div>
+</div>
+<h2 style="color: var(--ocre); margin-top: 1rem;">
+      Portal
+      <span style="color: white;">
+       Contribuyentes
+      </span>
+</h2>
+<p style="font-size: 0.8rem; margin-top: 0.5rem; color: var(--ocre-claro);">
+      Acceso seguro para contribuyentes
+     </p>
+</div>
+<div class="nav-menu">
+<div class="nav-item active" onclick="mostrarSeccion('inicio')">
+<i class="fas fa-home">
+</i>
+<span>
+       Inicio
+      </span>
+</div>
+<div class="nav-item" onclick="mostrarSeccion('estado')"><a href="cuenta_estado_combinado.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; padding: 0.8rem 1.5rem;" target="_blank"><i class="fas fa-user-circle">
+</i><span>
+       Estado de Cuenta
+      </span></a></div>
+<div class="nav-item" onclick="mostrarSeccion('pagos')"><a href="pagos_integrado.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; padding: 0.8rem 1.5rem;" target="_blank"><i class="fas fa-credit-card">
+</i><span>
+       Pagos en Línea
+      </span></a></div>
+<div class="nav-item" onclick="mostrarSeccion('predios')"><a href="predios.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; padding: 0.8rem 1.5rem;" target="_blank"><i class="fas fa-map-marked-alt">
+</i><span>
+       Mis Predios
+      </span></a></div>
+<div class="nav-item" onclick="mostrarSeccion('documentos')"><a href="documentos.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; padding: 0.8rem 1.5rem;" target="_blank"><i class="fas fa-file-download">
+</i><span>
+       Documentos
+      </span></a></div>
+<div class="nav-item" onclick="mostrarSeccion('ayuda')"><a href="ayuda.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; padding: 0.8rem 1.5rem;" target="_blank"><i class="fas fa-question-circle">
+</i><span>
+       Ayuda
+      </span></a></div>
+</div>
+</div>
+<!-- Main Content -->
+<div class="main-content">
+<div class="header">
+<div>
+<h2 style="color: var(--vino);">
+       Portal de Contribuyentes
+      </h2>
+<p style="color: #777; font-size: 0.9rem;">
+       Município de San José de Iturbide
+      </p>
+</div>
+<div class="search-bar">
+<i class="fas fa-search">
+</i>
+<input placeholder="Buscar predios, documentos..." type="text"/>
+</div>
+<div class="user-info">
+<div class="user-avatar">
+       CT
+      </div>
+<div>
+<div style="font-weight: 500;">
+        Contribuyente
+       </div>
+<div style="font-size: 0.8rem; color: #777;">
+        Acceso Autorizado
+       </div>
+</div>
+</div>
+</div>
+<!-- Login Section -->
+<div class="login-section" id="loginSection">
+<h2 class="login-title">
+      Pago de Impuesto Predial
+     </h2>
+<p style="text-align: center; margin-bottom: 1.5rem; color: #555;">
+      Favor de indicar los datos de la cuenta a pagar
+     </p>
+<div class="form-group">
+<label for="accountType">
+       Tipo de Cuenta
+      </label>
+<select class="form-control" id="accountType">
+<option value="">
+        Seleccione tipo de cuenta
+       </option>
+<option value="urbana">
+        Urbana
+       </option>
+<option value="rustica">
+        Rústica
+       </option>
+</select>
+</div>
+<div class="form-group">
+<label for="accountNumber">
+       Número de cuenta
+      </label>
+<input id="accountNumber" placeholder="Ingrese el número de cuenta (9 dígitos)" type="text"/>
+<div class="error-message" id="accountError">
+<i class="fas fa-exclamation-circle">
+</i>
+<span id="errorText">
+        Número de cuenta no válido
+       </span>
+</div>
+</div>
+<button class="btn btn-primary" onclick="validateAccount()">
+<i class="fas fa-search">
+</i>
+      Buscar Cuenta
+     </button>
+<div class="login-footer">
+      Plaza Principal no. 1, Cd. Centro, C.P. 2/960, San José Iturbide, Gto. México.
+      <br/>
+      SÍL306.DR +32(210)-142-0003 Todos los Derechos Reservados 2023
+     </div>
+</div>
+<!-- Dashboard Content -->
+<div id="dashboardContent" style="display: none;">
+<!-- Feature Grid -->
+<div class="feature-grid">
+<div class="feature-card">
+<div class="feature-number">
+        4
+       </div>
+<div class="feature-title">
+<i class="fas fa-lock">
+</i>
+<span>
+         Portal Web para Contribuyentes
+        </span>
+</div>
+<div class="feature-description">
+        Acceso seguro al portal web municipal para consulta y gestión de predios y pagos.
+       </div>
+<div class="feature-highlight">
+<div class="feature-highlight-title">
+         Autenticación Segura
+        </div>
+<div class="feature-highlight-content">
+         Los contribuyentes pueden acceder al portal web de forma segura utilizando su RFC o número de cuenta predial.
+        </div>
+</div>
+</div>
+<div class="feature-card">
+<div class="feature-number">
+        4
+       </div>
+<div class="feature-title">
+<i class="fas fa-file-invoice">
+</i>
+<span>
+         Consulta de Estado de Cuenta
+        </span>
+</div>
+<div class="feature-description">
+        Visualización completa del estado de cuenta con adeudos y pagos realizados.
+       </div>
+<div class="feature-highlight">
+<div class="feature-highlight-title">
+         Información Detallada
+        </div>
+<div class="feature-highlight-content">
+         Los contribuyentes pueden consultar su estado de cuenta y adeudos pendientes en el portal web.
+        </div>
+</div>
+<div class="feature-highlight" style="margin-top: 0.5rem;">
+<div class="feature-highlight-title">
+         Tipo de Predio
+        </div>
+<div class="feature-highlight-content">
+         Los contribuyentes pueden verificar si sus terrenos son rurales o urbanos en el portal web.
+        </div>
+</div>
+</div>
+<div class="feature-card">
+<div class="feature-number">
+        5
+       </div>
+<div class="feature-title">
+<i class="fas fa-credit-card">
+</i>
+<span>
+         Pago en Línea
+        </span>
+</div>
+<div class="feature-description">
+        Sistema de pagos en línea seguro con múltiples métodos de pago disponibles.
+       </div>
+<div class="feature-highlight">
+<div class="feature-highlight-title">
+         Integración con Pasarela de Pago
+        </div>
+<div class="feature-highlight-content">
+         Los contribuyentes pueden realizar pagos en línea a través de una pasarela de pago segura.
+        </div>
+</div>
+<div class="feature-highlight" style="margin-top: 0.5rem;">
+<div class="feature-highlight-title">
+         Actualización Automática
+        </div>
+<div class="feature-highlight-content">
+         El estado de cuenta se actualiza automáticamente después de un pago exitoso y se genera un recibo digital descargable.
+        </div>
+</div>
+<div class="feature-highlight" style="margin-top: 0.5rem;">
+<div class="feature-highlight-title">
+         Confirmación Inmediata
+        </div>
+<div class="feature-highlight-content">
+         Los contribuyentes reciben una confirmación inmediata del pago realizado.
+        </div>
+</div>
+</div>
+</div>
+<!-- Additional Information -->
+<div style="margin-top: 2rem; background-color: var(--beige); padding: 1.5rem; border-radius: 8px;">
+<h3 style="color: var(--vino); margin-bottom: 1rem; display: flex; align-items: center;">
+<i class="fas fa-info-circle" style="margin-right: 0.7rem; color: var(--ocre);">
+</i>
+       Información Importante
+      </h3>
+<p style="margin-bottom: 1rem; color: #555;">
+       El Portal de Contribuyentes del Municipio de San José de Iturbide le permite acceder a toda la información relacionada con sus predios y realizar pagos de manera segura desde cualquier dispositivo.
+      </p>
+<ul style="padding-left: 1.5rem; color: #555;">
+<li style="margin-bottom: 0.5rem;">
+        Consulta tu estado de cuenta las 24 horas
+       </li>
+<li style="margin-bottom: 0.5rem;">
+        Realiza pagos seguros con tarjeta de crédito/débito
+       </li>
+<li style="margin-bottom: 0.5rem;">
+        Descarga recibos y comprobantes de pago
+       </li>
+<li style="margin-bottom: 0.5rem;">
+        Verifica el tipo y características de tus predios
+       </li>
+<li>
+        Actualiza tus datos de contacto
+       </li>
+</ul>
+</div>
+</div>
+<div id="menuContent" style="display:none; margin-top: 2rem;">
+<h2 id="tituloSeccion" style="color: var(--vino); margin-bottom: 1rem;">
+</h2>
+<div id="contenidoSeccion" style="color: #555;">
+</div>
+</div>
+</div>
+</div>
+<script>
+   // Variable para almacenar los datos del JSON
+        let prediosData = [];
+        
+        // Cargar el archivo JSON al iniciar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('predios.json')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error al cargar el archivo predios.json');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    prediosData = data.predios || [];
+                    console.log('Datos de predios cargados:', prediosData);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('errorText').textContent = 'Error al cargar los datos de predios';
+                    document.getElementById('accountError').style.display = 'block';
+                });
+            
+            // Mostrar siempre el formulario de login al cargar
+            document.getElementById('loginSection').style.display = 'block';
+            document.getElementById('dashboardContent').style.display = 'none';
+            
+            // Limpiar mensajes de error al cambiar los campos
+            document.getElementById('accountNumber').addEventListener('input', function() {
+                document.getElementById('accountError').style.display = 'none';
+            });
+        });
+
+        // Función para validar la cuenta contra el JSON
+        function validateAccount() {
+            const accountType = document.getElementById('accountType').value;
+            const accountNumber = document.getElementById('accountNumber').value;
+            const errorElement = document.getElementById('accountError');
+            const errorTextElement = document.getElementById('errorText');
+            
+            // Validar que se haya seleccionado un tipo de cuenta
+            if (!accountType) {
+                errorTextElement.textContent = "Por favor seleccione un tipo de cuenta";
+                errorElement.style.display = 'block';
+                return;
+            }
+            
+            // Validar que el número de cuenta no esté vacío
+            if (!accountNumber) {
+                errorTextElement.textContent = "Por favor ingrese un número de cuenta";
+                errorElement.style.display = 'block';
+                return;
+            }
+            
+            // Validar que solo sean números y exactamente 9 dígitos
+            if (!/^\d{9}$/.test(accountNumber)) {
+                errorTextElement.textContent = "El número de cuenta debe tener exactamente 9 dígitos";
+                errorElement.style.display = 'block';
+                return;
+            }
+            
+            // Buscar el predio en los datos
+            const predioEncontrado = prediosData.find(
+                predio => predio.numero === accountNumber && predio.tipo === accountType
+            );
+            
+            if (!predioEncontrado) {
+                errorTextElement.textContent = "Número de cuenta no válido o no encontrado";
+                errorElement.style.display = 'block';
+                return;
+            }
+            
+            // Si todo es correcto, proceder al login
+            login(accountType, accountNumber, predioEncontrado.propietario);
+        }
+
+        // Función para realizar el login
+        function login(accountType, accountNumber, propietario) {
+            // Ocultar sección de login y mostrar dashboard
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('dashboardContent').style.display = 'block';
+            
+            // Actualizar información de usuario
+            document.querySelector('.user-avatar').textContent = propietario.substring(0, 2).toUpperCase();
+            document.querySelector('.user-info div:first-child').textContent = propietario;
+            document.querySelector('.user-info div:nth-child(2)').textContent = `Cuenta ${accountType} #${accountNumber}`;
+        }
+        function mostrarSeccion(seccion) {
+  const secciones = {
+    inicio: `
+      <div style="text-align: center; margin-bottom: 2rem;">
+        <img src="OIP.jpg" alt="San José de Iturbide" style="max-width: 300px; height: auto; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); margin-bottom: 1rem;" />
+        <p style="font-size: 1.1rem;">Bienvenido al <strong>Portal de Contribuyentes</strong>. Aquí puedes gestionar tus predios y pagos.</p>
+      </div>
+    `,
+    estado: `
+      <div>
+        <p>Consulta tus adeudos y pagos realizados por año:</p>
+         <p><strong>Nombre:</strong>Juan Perez</p>
+        <p><strong>Cuenta:</strong> 100100120</p>
+        <p><strong>Tipo de Asentamiento:</strong> Urbano</p>
+        <a class="btn btn-primary" href="cuenta_estado_combinado.html" target="_blank"><i class="fas fa-file-invoice"></i> Estado de Cuenta</a>
+      </div>
+    `,
+    pagos: `
+      <div>
+        <p>Accede a la pasarela de pago:</p>
+        <a class="btn btn-primary" href="pagos_integrado.html" target="_blank"><i class="fas fa-credit-card"></i> Realizar Pago</a>
+      </div>
+    `,
+    predios: `
+      <div>
+        <p>Consulta los detalles de tus predios registrados:</p>
+        <a class="btn btn-primary" href="predios.html" target="_blank"><i class="fas fa-map-marked-alt"></i> Ver Predios</a>
+      </div>
+    `,
+    documentos: `
+      <div>
+        <p>Descarga tus documentos oficiales:</p>
+        <a class="btn btn-primary" href="documentos.html" target="_blank"><i class="fas fa-file-download"></i> Ver Documentos</a>
+      </div>
+    `,
+    ayuda: `
+      <div>
+        <p>¿Necesitas asistencia?</p>
+        <a class="btn btn-primary" href="ayuda.html" target="_blank"><i class="fas fa-question-circle"></i> Ir a Ayuda</a>
+      </div>
+    `
+  };
+
+  const tituloMap = {
+    inicio: "Inicio",
+    estado: "Estado de Cuenta",
+    pagos: "Pagos en Línea",
+    predios: "Mis Predios",
+    documentos: "Documentos",
+    ayuda: "Ayuda"
+  };
+
+  document.getElementById('loginSection').style.display = 'none';
+  document.getElementById('dashboardContent').style.display = 'none';
+  document.getElementById('menuContent').style.display = 'block';
+
+  document.getElementById('tituloSeccion').innerText = tituloMap[seccion];
+  document.getElementById('contenidoSeccion').innerHTML = secciones[seccion];
+
+  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+  const itemActivo = [...document.querySelectorAll('.nav-item')].find(el =>
+    el.textContent.includes(tituloMap[seccion])
+  );
+  if (itemActivo) itemActivo.classList.add('active');
+}</script>
+</body>
+</html>

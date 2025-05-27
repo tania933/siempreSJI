@@ -1,0 +1,24 @@
+{
+  "predios": [
+    {"numero": "100100101", "tipo": "urbana", "propietario": "Juan Pérez López"},
+    {"numero": "100100102", "tipo": "rustica", "propietario": "María García Sánchez"},
+    {"numero": "100100103", "tipo": "urbana", "propietario": "Carlos Ramírez Torres"},
+    {"numero": "100100104", "tipo": "urbana", "propietario": "Ana Laura Fernández"},
+    {"numero": "100100105", "tipo": "rustica", "propietario": "Luis Miguel Ortega"},
+    {"numero": "100100106", "tipo": "urbana", "propietario": "Sofía Martínez Ríos"},
+    {"numero": "100100107", "tipo": "rustica", "propietario": "Javier Morales Luna"},
+    {"numero": "100100108", "tipo": "urbana", "propietario": "Patricia Domínguez Vázquez"},
+    {"numero": "100100109", "tipo": "rustica", "propietario": "Roberto Castro Navarro"},
+    {"numero": "100100110", "tipo": "urbana", "propietario": "Fernanda Reyes Jiménez"},
+    {"numero": "100100111", "tipo": "rustica", "propietario": "Oscar Velasco Mendoza"},
+    {"numero": "100100112", "tipo": "urbana", "propietario": "Eduardo Vega Cruz"},
+    {"numero": "100100113", "tipo": "urbana", "propietario": "Diana Lucía Rojas"},
+    {"numero": "100100114", "tipo": "rustica", "propietario": "Guillermo Sosa Delgado"},
+    {"numero": "100100115", "tipo": "urbana", "propietario": "Verónica Espinoza Guzmán"},
+    {"numero": "100100116", "tipo": "rustica", "propietario": "Alejandro Medina Tapia"},
+    {"numero": "100100117", "tipo": "urbana", "propietario": "Carmen Valdez Ochoa"},
+    {"numero": "100100118", "tipo": "urbana", "propietario": "Ricardo Aguilar Salazar"},
+    {"numero": "100100119", "tipo": "rustica", "propietario": "Karen Lizeth Camacho"},
+    {"numero": "100100120", "tipo": "urbana", "propietario": "Juan Perez"}
+  ]
+}
