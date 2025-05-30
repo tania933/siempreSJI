@@ -1,0 +1,2696 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SimpreSJI | San José de Iturbide</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&amp;family=Playfair+Display:wght@500&amp;display=swap" rel="stylesheet"/>
+<style>
+        :root {
+            --vino: #722f37;
+            --vino-oscuro: #5a232a;
+            --ocre: #c3a668;
+            --ocre-claro: #e8d9b5;
+            --beige: #f5f0e6;
+            --gris-oscuro: #333333;
+            --success: #4a8c5e;
+            --warning: #d4a017;
+            --danger: #c1554a;
+            --info: #3a7ca5;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--beige);
+            color: var(--gris-oscuro);
+            line-height: 1.6;
+        }
+        
+        .app-container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: 100vh;
+        }
+        
+        /* Estilos del sidebar */
+        .sidebar {
+            background-color: var(--vino);
+            color: white;
+            padding: 1.5rem 0;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+        }
+        
+        .logo {
+            text-align: center;
+            padding: 0 1rem 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .logo img {
+            max-width: 80%;
+        }
+        
+        .municipio-logo {
+            font-family: 'Playfair Display', serif;
+            color: white;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        
+        .municipio-logo h2 {
+            font-size: 1.2rem;
+            line-height: 1.3;
+            margin-bottom: 0.3rem;
+        }
+        
+        .municipio-logo p {
+            font-size: 0.7rem;
+            color: var(--ocre);
+            font-style: italic;
+        }
+        
+        .escudo-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .escudo {
+            width: 80px;
+            height: 80px;
+            background-color: var(--ocre-claro);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid var(--ocre);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .escudo i {
+            font-size: 2rem;
+            color: var(--vino);
+        }
+        
+        .nav-menu {
+            margin-top: 2rem;
+        }
+        
+        .nav-item {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            border-left: 3px solid transparent;
+        }
+        
+        .nav-item:hover {
+            background-color: rgba(255,255,255,0.1);
+            border-left: 3px solid var(--ocre);
+        }
+        
+        .nav-item.active {
+            background-color: var(--vino-oscuro);
+            border-left: 3px solid var(--ocre);
+        }
+        
+        .nav-item i {
+            margin-right: 0.8rem;
+            width: 20px;
+            text-align: center;
+            color: var(--ocre);
+        }
+        
+        .submenu {
+            padding-left: 2.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background-color: rgba(0,0,0,0.1);
+        }
+        
+        .submenu.show {
+            max-height: 500px;
+        }
+        
+        .submenu .nav-item {
+            padding: 0.6rem 1rem;
+            font-size: 0.9rem;
+            border-left: none;
+            position: relative;
+        }
+        
+        .submenu .nav-item .badge {
+            position: absolute;
+            right: 1rem;
+            font-size: 0.6rem;
+            padding: 0.2rem 0.4rem;
+        }
+        
+        /* Badges de categorías */
+        .badge-tesoreria {
+            background-color: var(--success);
+            color: white;
+        }
+        
+        .badge-catastro {
+            background-color: var(--info);
+            color: white;
+        }
+        
+        .badge-notaria {
+            background-color: var(--warning);
+            color: white;
+        }
+        
+        .badge-futuro {
+            background-color: var(--danger);
+            color: white;
+        }
+
+        /* Estilos del contenido principal */
+        .main-content {
+            padding: 1.5rem;
+            background-color: white;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--vino);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background-color: white;
+            border-radius: 4px;
+            padding: 0.5rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            width: 300px;
+            border: 1px solid #ddd;
+        }
+        
+        .search-bar input {
+            border: none;
+            outline: none;
+            padding: 0.5rem;
+            width: 100%;
+            background-color: transparent;
+        }
+        
+        .search-bar i {
+            color: var(--vino);
+            margin: 0 0.5rem;
+        }
+        
+        /* Estilos de las tarjetas */
+        .dashboard-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+            border: 1px solid #eee;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        .card-icon.primary {
+            background-color: var(--vino);
+        }
+        
+        .card-icon.success {
+            background-color: var(--success);
+        }
+        
+        .card-icon.warning {
+            background-color: var(--warning);
+        }
+        
+        .card-icon.danger {
+            background-color: var(--danger);
+        }
+        
+        .card-icon.info {
+            background-color: var(--info);
+        }
+        
+        .card-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--vino);
+        }
+        
+        .card-title {
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        /* Estilos de la tabla */
+        .data-table {
+            width: 100%;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            overflow: hidden;
+            border: 1px solid #eee;
+        }
+        
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #eee;
+            background-color: var(--beige);
+        }
+        
+        .table-title {
+            font-weight: 500;
+            color: var(--vino);
+        }
+        
+        .table-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background-color: var(--vino);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--vino-oscuro);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--vino);
+            color: var(--vino);
+        }
+        
+        .btn-outline:hover {
+            background-color: rgba(114, 47, 55, 0.1);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 1rem 1.5rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        th {
+            font-weight: 500;
+            color: var(--vino);
+            background-color: var(--beige);
+        }
+        
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .badge-success {
+            background-color: #e8f3eb;
+            color: var(--success);
+        }
+        
+        .badge-warning {
+            background-color: #faf3e0;
+            color: var(--warning);
+        }
+        
+        .badge-danger {
+            background-color: #faeceb;
+            color: var(--danger);
+        }
+        
+        /* Estilos del mapa */
+        .map-container {
+            height: 500px;
+            background-color: #eee;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid #ddd;
+        }
+        
+        .map-actions {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        /* Módulos de SimpreCAD */
+        .module-container {
+            display: none;
+            animation: fadeIn 0.3s;
+        }
+        
+        .module-container.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .module-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .table-container {
+            margin-top: 1.5rem;
+            overflow-x: auto;
+        }
+        
+        /* Estilos para módulos específicos */
+        .report-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .report-item:last-child {
+            border-bottom: none;
+        }
+        
+        .alert-item {
+            background-color: #fff8e6; 
+            border-left: 4px solid var(--warning); 
+            padding: 1rem; 
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .card-title {
+            font-weight: 500;
+            color: var(--vino);
+        }
+        
+        .card-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--vino);
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .app-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: -250px;
+                width: 250px;
+                height: 100vh;
+                z-index: 1000;
+                transition: left 0.3s ease;
+            }
+            
+            .sidebar.show {
+                left: 0;
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+<!-- Sidebar -->
+<div class="sidebar">
+<div class="logo">
+<div class="municipio-logo">
+<h2>Município de<br/>San José<br/>de Iturbide</h2>
+<p>¡Unidos por la Paz!</p>
+</div>
+<div class="escudo-container">
+<div class="escudo">
+<i class="fas fa-landmark"></i> <!-- Icono temporal para el escudo -->
+</div>
+</div>
+<h2 style="color: var(--ocre); margin-top: 1rem;">Simpre<span style="color: white;">SJI</span></h2>
+<p style="font-size: 0.8rem; margin-top: 0.5rem; color: var(--ocre-claro);">Sistema Catastral Municipal</p>
+</div>
+<div class="nav-menu">
+<div class="nav-item active" onclick="showModule('dashboard')">
+<i class="fas fa-tachometer-alt"></i>
+<span>Dashboard</span>
+</div>
+<!-- Módulo de Tesorería -->
+<div class="nav-item" onclick="toggleSubmenu('tesoreria')">
+<i class="fas fa-money-bill-wave"></i>
+<span>Tesorería</span>
+<i class="fas fa-chevron-down" style="margin-left: auto;"></i>
+</div>
+<div class="submenu" id="tesoreria-submenu">
+<div class="nav-item" onclick="showModule('generar-recibos')">
+<i class="fas fa-file-invoice-dollar"></i>
+<span>Generar Recibos</span>
+
+</div>
+<div class="nav-item" onclick="showModule('historial-pagos')">
+<i class="fas fa-history"></i>
+<span>Historial de Pagos</span>
+
+</div>
+<div class="nav-item" onclick="showModule('impresion-documentos')">
+<i class="fas fa-print"></i>
+<span>Impresión de Documentos</span>
+
+</div>
+<div class="nav-item" onclick="showModule('reportes-oficiales')">
+<i class="fas fa-file-export"></i>
+<span>Reportes Oficiales</span>
+
+</div>
+</div>
+<!-- Módulo de Catastro -->
+<div class="nav-item" onclick="toggleSubmenu('catastro')">
+<i class="fas fa-map-marked-alt"></i>
+<span>Catastro</span>
+<i class="fas fa-chevron-down" style="margin-left: auto;"></i>
+</div>
+<div class="submenu" id="catastro-submenu">
+<div class="nav-item" onclick="showModule('registro-predios')">
+<i class="fas fa-plus-circle"></i>
+<span>Registro de Predios</span>
+
+</div>
+<div class="nav-item" onclick="showModule('modificar-predios')">
+<i class="fas fa-edit"></i>
+<span>Modificar Predios</span>
+
+</div>
+<div class="nav-item" onclick="showModule('busqueda-avanzada')">
+<i class="fas fa-search"></i>
+<span>Búsqueda Avanzada</span>
+
+</div>
+<div class="nav-item" onclick="showModule('historial-cambios')">
+<i class="fas fa-history"></i>
+<span>Historial de Cambios</span>
+
+</div>
+<div class="nav-item" onclick="showModule('reportes-catastrales')">
+<i class="fas fa-chart-bar"></i>
+<span>Reportes Catastrales</span>
+
+</div>
+<div class="nav-item" onclick="showModule('alertas-catastro')">
+<i class="fas fa-bell"></i>
+<span>Alertas Catastrales</span>
+
+</div>
+<div class="nav-item" onclick="showModule('mapas-tematicos')">
+<i class="fas fa-map"></i>
+<span>Mapas Temáticos</span>
+<span class="badge badge-futuro">Fase Futura</span>
+</div>
+<div class="nav-item" onclick="showModule('evolucion-valores')">
+<i class="fas fa-chart-line"></i>
+<span>Evolución de Valores</span>
+<span class="badge badge-futuro">Fase Futura</span>
+</div>
+</div>
+<!-- Módulo de Notaría -->
+<div class="nav-item" onclick="toggleSubmenu('notaria')">
+<i class="fas fa-gavel"></i>
+<span>Notaría</span>
+<i class="fas fa-chevron-down" style="margin-left: auto;"></i>
+</div>
+<div class="submenu" id="notaria-submenu">
+<div class="nav-item" onclick="showModule('traslados-dominio')">
+<i class="fas fa-exchange-alt"></i>
+<span>Traslados de Dominio</span>
+
+</div>
+</div>
+<!-- Módulo de Documentos (Fase Futura) -->
+<div class="nav-item" onclick="toggleSubmenu('documentos')">
+<i class="fas fa-file-upload"></i>
+<span>Documentos</span>
+<i class="fas fa-chevron-down" style="margin-left: auto;"></i>
+<span class="badge badge-futuro" style="margin-left: 0.5rem;">Fase Futura</span>
+</div>
+<div class="submenu" id="documentos-submenu">
+<div class="nav-item" onclick="showModule('carga-documentos')">
+<i class="fas fa-upload"></i>
+<span>Carga de Documentos</span>
+<span class="badge badge-futuro">Fase Futura</span>
+</div>
+<div class="nav-item" onclick="showModule('visualizacion-documentos')">
+<i class="fas fa-file-pdf"></i>
+<span>Visualización de Documentos</span>
+<span class="badge badge-futuro">Fase Futura</span>
+</div>
+</div>
+<!-- Módulo SIG (Fase Futura) -->
+<div class="nav-item" onclick="toggleSubmenu('sig')">
+<i class="fas fa-map"></i>
+<span>Sistema SIG</span>
+<i class="fas fa-chevron-down" style="margin-left: auto;"></i>
+<span class="badge badge-futuro" style="margin-left: 0.5rem;">Fase Futura</span>
+</div>
+<div class="submenu" id="sig-submenu">
+<div class="nav-item" onclick="showModule('visualizacion-sig')">
+<i class="fas fa-map-marked-alt"></i>
+<span>Visualización SIG</span>
+<span class="badge badge-futuro">Fase Futura</span>
+</div>
+<div class="nav-item" onclick="showModule('herramientas-sig')">
+<i class="fas fa-ruler-combined"></i>
+<span>Herramientas SIG</span>
+<span class="badge badge-futuro">Fase Futura</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Content -->
+<div class="main-content">
+<!-- Dashboard -->
+<div class="module-container active" id="dashboard">
+<div class="header">
+<div>
+<h2 style="color: var(--vino);">Dashboard</h2>
+<p style="color: #777; font-size: 0.9rem;">Resumen general del sistema</p>
+</div>
+<div class="search-bar">
+<i class="fas fa-search"></i>
+<input placeholder="Buscar predios, contribuyentes..." type="text"/>
+</div>
+<div class="user-info">
+<div class="user-avatar">JP</div>
+<div>
+<div style="font-weight: 500;">Juan Pérez</div>
+<div style="font-size: 0.8rem; color: #777;">Administrador</div>
+</div>
+</div>
+</div>
+<!-- Dashboard Cards -->
+<div class="dashboard-cards">
+<div class="card">
+<div class="card-header">
+<div>
+<div class="card-title">Predios Registrados</div>
+<div class="card-value">12,548</div>
+</div>
+<div class="card-icon primary">
+<i class="fas fa-map-marked-alt"></i>
+</div>
+</div>
+<div style="color: var(--success); font-size: 0.9rem;">
+<i class="fas fa-arrow-up"></i> 3.2% desde el mes pasado
+                        </div>
+</div>
+<div class="card">
+<div class="card-header">
+<div>
+<div class="card-title">Recaudación Mensual</div>
+<div class="card-value">$4,782,350</div>
+</div>
+<div class="card-icon success">
+<i class="fas fa-money-bill-wave"></i>
+</div>
+</div>
+<div style="color: var(--success); font-size: 0.9rem;">
+<i class="fas fa-arrow-up"></i> 8.5% desde el mes pasado
+                        </div>
+</div>
+<div class="card">
+<div class="card-header">
+<div>
+<div class="card-title">Predios en Mora</div>
+<div class="card-value">1,247</div>
+</div>
+<div class="card-icon warning">
+<i class="fas fa-exclamation-triangle"></i>
+</div>
+</div>
+<div style="color: var(--danger); font-size: 0.9rem;">
+<i class="fas fa-arrow-down"></i> 2.1% desde el mes pasado
+                        </div>
+</div>
+<div class="card">
+<div class="card-header">
+<div>
+<div class="card-title">Certificados Emitidos</div>
+<div class="card-value">328</div>
+</div>
+<div class="card-icon danger">
+<i class="fas fa-certificate"></i>
+</div>
+</div>
+<div style="color: var(--success); font-size: 0.9rem;">
+<i class="fas fa-arrow-up"></i> 12.4% desde el mes pasado
+                        </div>
+</div>
+</div>
+<!-- Recent Activity and Map -->
+<div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+<!-- Recent Activity -->
+<div class="data-table">
+<div class="table-header">
+<div class="table-title">Actividad Reciente</div>
+<div class="table-actions">
+<button class="btn btn-outline">
+<i class="fas fa-filter"></i> Filtrar
+                                </button>
+<button class="btn btn-outline">
+<i class="fas fa-download"></i> Exportar
+                                </button>
+</div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Fecha</th>
+<th>Usuario</th>
+<th>Acción</th>
+<th>Detalles</th>
+<th>Estado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>15/06/2023 09:45</td>
+<td>Juan Pérez</td>
+<td>Actualización de predio</td>
+<td>Cuenta: U-1245-678</td>
+<td><span class="badge badge-success">Completado</span></td>
+</tr>
+<tr>
+<td>15/06/2023 10:12</td>
+<td>María Gómez</td>
+<td>Pago registrado</td>
+<td>Recibo #12456 - $2,450.00</td>
+<td><span class="badge badge-success">Completado</span></td>
+</tr>
+<tr>
+<td>15/06/2023 11:30</td>
+<td>Carlos Ruiz</td>
+<td>Certificado emitido</td>
+<td>No adeudo - Cuenta R-4567-123</td>
+<td><span class="badge badge-success">Completado</span></td>
+</tr>
+<tr>
+<td>15/06/2023 14:15</td>
+<td>Ana Martínez</td>
+<td>Error en valuación</td>
+<td>Avaluó #456 - Revisión requerida</td>
+<td><span class="badge badge-warning">Pendiente</span></td>
+</tr>
+<tr>
+<td>15/06/2023 16:40</td>
+<td>Luis Hernández</td>
+<td>Traslado de dominio</td>
+<td>Aviso #789 - En proceso</td>
+<td><span class="badge badge-warning">En progreso</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Quick Actions -->
+<div style="display: flex; flex-direction: column; gap: 1.5rem;">
+<div class="card">
+<div class="card-header">
+<div class="table-title">Acciones Rápidas</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 0.8rem; padding: 1rem;">
+<button class="btn btn-primary" onclick="showModule('registro-predios')">
+<i class="fas fa-plus"></i> Nuevo Predio
+                                </button>
+<button class="btn btn-primary" onclick="showModule('generar-recibos')">
+<i class="fas fa-receipt"></i> Registrar Pago
+                                </button>
+<button class="btn btn-primary">
+<i class="fas fa-certificate"></i> Emitir Certificado
+                                </button>
+<button class="btn btn-primary" onclick="showModule('visualizacion-sig')">
+<i class="fas fa-map-marked-alt"></i> Consultar SIG
+                                </button>
+</div>
+</div>
+<div class="card">
+<div class="card-header">
+<div class="table-title">Distribución de Predios</div>
+</div>
+<div style="padding: 1rem;">
+<div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+<span>Urbanos</span>
+<span>9,432 (75%)</span>
+</div>
+<div style="height: 8px; background-color: #eee; border-radius: 4px; overflow: hidden;">
+<div style="width: 75%; height: 100%; background-color: var(--vino);"></div>
+</div>
+<div style="display: flex; justify-content: space-between; margin: 1rem 0 0.5rem;">
+<span>Rústicos</span>
+<span>3,116 (25%)</span>
+</div>
+<div style="height: 8px; background-color: #eee; border-radius: 4px; overflow: hidden;">
+<div style="width: 25%; height: 100%; background-color: var(--ocre);"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Map Section -->
+<div class="data-table">
+<div class="table-header">
+<div class="table-title">Visualización Geográfica</div>
+<div class="table-actions">
+<button class="btn btn-outline">
+<i class="fas fa-layer-group"></i> Capas
+                            </button>
+<button class="btn btn-outline">
+<i class="fas fa-search"></i> Buscar
+                            </button>
+<button class="btn btn-primary">
+<i class="fas fa-expand"></i> Pantalla completa
+                            </button>
+</div>
+</div>
+<div class="map-container">
+<!-- Aquí iría el mapa integrado (Google Maps, Mapbox, etc.) -->
+<div style="display: flex; align-items: center; justify-content: center; height: 100%; color: #777;">
+<i class="fas fa-map-marked-alt" style="font-size: 3rem; margin-right: 1rem; color: var(--vino);"></i>
+<div>
+<h3 style="color: var(--vino);">Mapa de San José de Iturbide</h3>
+<p>Visualización de predios, colonias y zonas</p>
+</div>
+</div>
+<div class="map-actions">
+<button class="btn btn-primary" style="padding: 0.5rem; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+<i class="fas fa-crosshairs"></i>
+</button>
+<button class="btn btn-primary" style="padding: 0.5rem; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+<i class="fas fa-ruler"></i>
+</button>
+<button class="btn btn-primary" style="padding: 0.5rem; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+<i class="fas fa-print"></i>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Módulo de Tesorería - Generar Recibos -->
+<div class="module-container" id="generar-recibos">
+<div class="module-header">
+<h2><i class="fas fa-file-invoice-dollar" style="color: var(--success);"></i> Generar Recibos de Pago</h2>
+<span class="badge badge-tesoreria">Tesorería</span>
+</div>
+<div class="form-grid">
+<label>Cuenta Predial:</label>
+<div>
+<input placeholder="Buscar por clave catastral..." style="padding: 0.5rem; width: 100%;" type="text"/>
+<button class="btn btn-outline" style="margin-top: 0.5rem;">
+<i class="fas fa-search"></i> Buscar Cuenta
+                        </button>
+</div>
+<label>Propietario:</label>
+<input readonly="" style="padding: 0.5rem; width: 100%;" type="text"/>
+<label>Dirección:</label>
+<input readonly="" style="padding: 0.5rem; width: 100%;" type="text"/>
+<label>Periodo Fiscal:</label>
+<select style="padding: 0.5rem; width: 100%;">
+<option>2023 - Enero</option>
+<option>2023 - Febrero</option>
+<option>2023 - Marzo</option>
+</select>
+<label>Conceptos:</label>
+<div style="border: 1px solid #eee; border-radius: 4px; padding: 0.5rem;">
+<div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+<span>Impuesto Predial Corriente</span>
+<span>$1,250.00</span>
+</div>
+<div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+<span>Rezagos</span>
+<span>$350.00</span>
+</div>
+<div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+<span>Recargos</span>
+<span>$120.00</span>
+</div>
+<div style="display: flex; justify-content: space-between; font-weight: 500;">
+<span>Total a Pagar</span>
+<span>$1,720.00</span>
+</div>
+</div>
+</div>
+<div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+<button class="btn btn-primary">
+<i class="fas fa-save"></i> Generar Recibo
+                    </button>
+<button class="btn btn-outline">
+<i class="fas fa-print"></i> Imprimir Recibo
+                    </button>
+<button class="btn btn-outline">
+<i class="fas fa-file-pdf"></i> Exportar a PDF
+                    </button>
+</div>
+</div>
+<!-- Módulo de Tesorería - Historial de Pagos -->
+<div class="module-container" id="historial-pagos">
+<div class="module-header">
+<h2><i class="fas fa-history" style="color: var(--success);"></i> Historial de Pagos</h2>
+<span class="badge badge-tesoreria">Tesorería</span>
+</div>
+<div class="form-grid">
+<label>Cuenta Predial:</label>
+<div>
+<input placeholder="Buscar por clave catastral..." style="padding: 0.5rem; width: 100%;" type="text"/>
+<button class="btn btn-outline" style="margin-top: 0.5rem;">
+<i class="fas fa-search"></i> Buscar Cuenta
+                        </button>
+</div>
+<label>Filtrar por:</label>
+<div style="display: flex; gap: 0.5rem;">
+<select style="padding: 0.5rem; flex: 1;">
+<option>Todos los periodos</option>
+<option>Últimos 3 meses</option>
+<option>2023</option>
+<option>2022</option>
+</select>
+<button class="btn btn-primary">
+<i class="fas fa-filter"></i> Filtrar
+                        </button>
+</div>
+</div>
+<div class="table-container" style="margin-top: 2rem;">
+<h4>Historial de Pagos</h4>
+<table>
+<thead>
+<tr>
+<th>Fecha</th>
+<th>Recibo</th>
+<th>Periodo</th>
+<th>Concepto</th>
+<th>Monto</th>
+<th>Estado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>15/06/2023</td>
+<td>#12456</td>
+<td>2023 - Junio</td>
+<td>Impuesto Predial</td>
+<td>$1,250.00</td>
+<td><span class="badge badge-success">Pagado</span></td>
+</tr>
+<tr>
+<td>15/05/2023</td>
+<td>#11892</td>
+<td>2023 - Mayo</td>
+<td>Impuesto Predial</td>
+<td>$1,250.00</td>
+<td><span class="badge badge-success">Pagado</span></td>
+</tr>
+<tr>
+<td>15/04/2023</td>
+<td>#11245</td>
+<td>2023 - Abril</td>
+<td>Impuesto Predial</td>
+<td>$1,250.00</td>
+<td><span class="badge badge-success">Pagado</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+<button class="btn btn-outline">
+<i class="fas fa-file-excel"></i> Exportar a Excel
+                    </button>
+<button class="btn btn-outline">
+<i class="fas fa-file-pdf"></i> Exportar a PDF
+                    </button>
+</div>
+</div>
+<!-- Módulo de Catastro - Registro de Predios -->
+<div class="module-container" id="registro-predios">
+<div class="module-header">
+<h2><i class="fas fa-plus-circle" style="color: var(--info);"></i> Registrar Predios</h2>
+<span class="badge badge-catastro">Catastro</span>
+</div>
+<div class="form-grid">
+<label>Clave Catastral:</label>
+<div>
+<input id="clave-catastral" readonly="" style="padding: 0.5rem; width: 100%;" type="text"/>
+<button class="btn btn-primary" onclick="generarClave()" style="margin-top: 0.5rem;">
+<i class="fas fa-key"></i> Generar Clave
+                        </button>
+</div>
+<label>Tipo de Predio:</label>
+<select style="padding: 0.5rem; width: 100%;">
+<option>Urbano</option>
+<option>Rústico</option>
+</select>
+<label>Propietario:</label>
+<input placeholder="Buscar propietario..." style="padding: 0.5rem; width: 100%;" type="text"/>
+<label>Superficie (m²):</label>
+<input style="padding: 0.5rem; width: 100%;" type="number"/>
+<label>Uso del Suelo:</label>
+<select style="padding: 0.5rem; width: 100%;">
+<option>Habitacional</option>
+<option>Comercial</option>
+<option>Industrial</option>
+<option>Agrícola</option>
+</select>
+<label>Ubicación:</label>
+<div>
+<input placeholder="Calle" style="padding: 0.5rem; width: 100%; margin-bottom: 0.5rem;" type="text"/>
+<input placeholder="Número" style="padding: 0.5rem; width: 100%; margin-bottom: 0.5rem;" type="text"/>
+<input placeholder="Colonia" style="padding: 0.5rem; width: 100%;" type="text"/>
+</div>
+
+<label>Imagen del Predio:</label>
+<div style="border: 2px dashed #ccc; padding: 1rem; text-align: center; background-color: #fafafa; border-radius: 8px;">
+<i class="fas fa-image" style="font-size: 2rem; color: var(--vino); margin-bottom: 0.5rem;"></i>
+<p style="margin-bottom: 0.5rem;">Selecciona una imagen relacionada con el predio</p>
+<input accept="image/*" id="imagen-predio" onchange="previewImagenPredio()" style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; background-color: white;" type="file"/>
+<div id="preview-imagen" style="margin-top: 1rem;"></div>
+<input id="imagen-base64" name="imagen_base64" type="hidden"/>
+<button class="btn btn-outline" onclick="eliminarImagen()" style="margin-top: 0.5rem;" type="button">
+<i class="fas fa-trash-alt"></i> Quitar Imagen
+  </button>
+</div></div>
+<button class="btn btn-primary" style="margin-top: 1.5rem;">
+<i class="fas fa-save"></i> Guardar Predio
+                </button>
+<div class="table-container" style="margin-top: 2rem;">
+<h4>Últimos predios registrados</h4>
+<table>
+<thead>
+<tr>
+<th>Clave</th>
+<th>Tipo</th>
+<th>Propietario</th>
+<th>Superficie</th>
+<th>Uso</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C-4821-15</td>
+<td>Urbano</td>
+<td>Juan Pérez</td>
+<td>350 m²</td>
+<td>Habitacional</td>
+</tr>
+<tr>
+<td>C-6723-09</td>
+<td>Rústico</td>
+<td>María García</td>
+<td>1200 m²</td>
+<td>Agrícola</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Módulo de Catastro - Búsqueda Avanzada -->
+<div class="module-container" id="busqueda-avanzada">
+<div class="module-header">
+<h2><i class="fas fa-search" style="color: var(--info);"></i> Búsqueda Avanzada</h2>
+<span class="badge badge-catastro">Catastro</span>
+</div>
+<div class="form-grid">
+<label>Tipo de Búsqueda:</label>
+<select style="padding: 0.5rem; width: 100%;">
+<option>Por Clave Catastral</option>
+<option>Por Propietario</option>
+<option>Por Dirección</option>
+<option>Por Uso del Suelo</option>
+<option>Por Tipo de Predio</option>
+</select>
+<label>Término:</label>
+<input placeholder="Ingrese criterio..." style="padding: 0.5rem; width: 100%;" type="text"/>
+<label>Filtros Adicionales:</label>
+<div style="display: flex; gap: 0.5rem;">
+<select style="padding: 0.5rem; flex: 1;">
+<option>Todos los tipos</option>
+<option>Urbano</option>
+<option>Rústico</option>
+</select>
+<select style="padding: 0.5rem; flex: 1;">
+<option>Todas las colonias</option>
+<option>Centro</option>
+<option>Las Flores</option>
+</select>
+</div>
+</div>
+<button class="btn btn-primary" style="margin-top: 1rem;">
+<i class="fas fa-search"></i> Buscar
+                </button>
+<div class="table-container" style="margin-top: 2rem;">
+<h4>Resultados</h4>
+<table>
+<thead>
+<tr>
+<th>Clave</th>
+<th>Dirección</th>
+<th>Propietario</th>
+<th>Tipo</th>
+<th>Uso</th>
+<th>Superficie</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C-4821-15</td>
+<td>Calle Morelos #123, Centro</td>
+<td>Juan Pérez</td>
+<td>Urbano</td>
+<td>Habitacional</td>
+<td>350 m²</td>
+</tr>
+<tr>
+<td>C-6723-09</td>
+<td>Camino Rural #45, Las Flores</td>
+<td>María García</td>
+<td>Rústico</td>
+<td>Agrícola</td>
+<td>1200 m²</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+<button class="btn btn-outline">
+<i class="fas fa-file-excel"></i> Exportar a Excel
+                    </button>
+<button class="btn btn-outline">
+<i class="fas fa-file-pdf"></i> Exportar a PDF
+                    </button>
+</div>
+</div>
+<!-- Módulo de Notaría - Traslados de Dominio -->
+<div class="module-container" id="traslados-dominio">
+<div class="module-header">
+<h2><i class="fas fa-exchange-alt" style="color: var(--warning);"></i> Traslados de Dominio</h2>
+<span class="badge badge-notaria">Notaría</span>
+</div>
+<div class="form-grid">
+<label>Número de Escritura:</label>
+<input placeholder="Ingrese número de escritura..." style="padding: 0.5rem; width: 100%;" type="text"/>
+<label>Fecha:</label>
+<input style="padding: 0.5rem; width: 100%;" type="date"/>
+<label>Notario:</label>
+<select style="padding: 0.5rem; width: 100%;">
+<option>Seleccione notario...</option>
+<option>Lic. Juan Martínez</option>
+<option>Lic. Ana Rodríguez</option>
+</select>
+<label>Predio:</label>
+<div>
+<input placeholder="Buscar predio..." style="padding: 0.5rem; width: 100%; margin-bottom: 0.5rem;" type="text"/>
+<button class="btn btn-outline" style="margin-top: 0.5rem;">
+<i class="fas fa-search"></i> Buscar Predio
+                        </button>
+</div>
+<label>Vendedor:</label>
+<input placeholder="Nombre del vendedor..." style="padding: 0.5rem; width: 100%;" type="text"/>
+<label>Comprador:</label>
+<input placeholder="Nombre del comprador..." style="padding: 0.5rem; width: 100%;" type="text"/>
+</div>
+<div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+<button class="btn btn-primary">
+<i class="fas fa-save"></i> Registrar Traslado
+                    </button>
+<button class="btn btn-outline">
+<i class="fas fa-search"></i> Buscar Traslados
+                    </button>
+</div>
+<div class="table-container" style="margin-top: 2rem;">
+<h4>Traslados Registrados</h4>
+<table>
+<thead>
+<tr>
+<th>Escritura</th>
+<th>Fecha</th>
+<th>Predio</th>
+<th>Vendedor</th>
+<th>Comprador</th>
+<th>Notario</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>#4587</td>
+<td>10/06/2023</td>
+<td>C-4821-15</td>
+<td>Carlos Sánchez</td>
+<td>Juan Pérez</td>
+<td>Lic. Ana Rodríguez</td>
+</tr>
+<tr>
+<td>#4215</td>
+<td>05/05/2023</td>
+<td>C-6723-09</td>
+<td>Roberto García</td>
+<td>María García</td>
+<td>Lic. Juan Martínez</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+<button class="btn btn-outline">
+<i class="fas fa-file-excel"></i> Exportar a Excel
+                    </button>
+<button class="btn btn-outline">
+<i class="fas fa-file-pdf"></i> Exportar a PDF
+                    </button>
+</div>
+</div>
+<!-- Módulo de Documentos (Fase Futura) -->
+<div class="module-container" id="carga-documentos">
+<div class="module-header">
+<h2><i class="fas fa-upload" style="color: var(--danger);"></i> Carga de Documentos</h2>
+<span class="badge badge-futuro">Fase Futura</span>
+</div>
+<div style="background-color: var(--beige); padding: 1.5rem; border-radius: 8px; text-align: center;">
+<i class="fas fa-clock" style="font-size: 2rem; color: var(--danger); margin-bottom: 1rem;"></i>
+<h3 style="color: var(--danger);">Funcionalidad en Desarrollo</h3>
+<p>Esta funcionalidad estará disponible en futuras actualizaciones del sistema.</p>
+</div>
+</div>
+<!-- Módulo SIG (Fase Futura) -->
+<div class="module-container" id="visualizacion-sig">
+<div class="module-header">
+<h2><i class="fas fa-map-marked-alt" style="color: var(--danger);"></i> Visualización SIG</h2>
+<span class="badge badge-futuro">Fase Futura</span>
+</div>
+<div style="background-color: var(--beige); padding: 1.5rem; border-radius: 8px; text-align: center;">
+<i class="fas fa-clock" style="font-size: 2rem; color: var(--danger); margin-bottom: 1rem;"></i>
+<h3 style="color: var(--danger);">Funcionalidad en Desarrollo</h3>
+<p>Esta funcionalidad estará disponible en futuras actualizaciones del sistema.</p>
+</div>
+</div>
+<!-- Módulo de Catastro - Modificar Predios (1.html) -->
+<div class="module-container" id="modificar-predios">
+<div class="module-header">
+<h2><i class="fas fa-edit" style="color: var(--info);"></i> Modificar Predios</h2>
+<span class="badge badge-catastro">Catastro</span>
+</div>
+<div class="form-grid">
+<label>Buscar Predio:</label>
+<div>
+<input placeholder="Ingrese clave catastral o dirección..." style="padding: 0.5rem; width: 100%;" type="text"/>
+<button class="btn btn-primary" style="margin-top: 0.5rem;">
+<i class="fas fa-search"></i> Buscar
+                        </button>
+</div>
+<label>Clave Catastral:</label>
+<input readonly="" style="padding: 0.5rem; width: 100%;" type="text" value="U-4821-15"/>
+<label>Propietario Actual:</label>
+<input style="padding: 0.5rem; width: 100%;" type="text" value="Juan Pérez Martínez"/>
+<label>Nuevo Propietario:</label>
+<input placeholder="Buscar o ingresar nuevo propietario..." style="padding: 0.5rem; width: 100%;" type="text"/>
+<label>Dirección:</label>
+<div>
+<input style="padding: 0.5rem; width: 100%; margin-bottom: 0.5rem;" type="text" value="Calle Morelos"/>
+<input style="padding: 0.5rem; width: 30%;" type="text" value="123"/>
+<input style="padding: 0.5rem; width: 65%; margin-left: 5%;" type="text" value="Centro"/>
+</div>
+<label>Superficie (m²):</label>
+<input style="padding: 0.5rem; width: 100%;" type="number" value="350"/>
+<label>Uso del Suelo:</label>
+<select style="padding: 0.5rem; width: 100%;">
+<option>Habitacional</option>
+<option selected="">Comercial</option>
+<option>Industrial</option>
+<option>Agrícola</option>
+</select>
+<label>Valor Catastral:</label>
+<div style="display: flex; align-items: center;">
+<input readonly="" style="padding: 0.5rem; width: 100%;" type="text" value="$1,250,000.00"/>
+<button class="btn btn-outline" style="margin-left: 0.5rem;">
+<i class="fas fa-calculator"></i> Recalcular
+                        </button>
+</div>
+<label>Observaciones:</label>
+<textarea placeholder="Ingrese motivo de la modificación..." style="padding: 0.5rem; width: 100%; height: 100px;"></textarea>
+</div>
+<div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+<button class="btn btn-primary">
+<i class="fas fa-save"></i> Guardar Cambios
+                    </button>
+<button class="btn btn-outline">
+<i class="fas fa-history"></i> Ver Historial
+                    </button>
+<button class="btn btn-outline">
+<i class="fas fa-print"></i> Imprimir Cambios
+                    </button>
+</div>
+<div class="table-container" style="margin-top: 2rem;">
+<h4>Historial de Modificaciones</h4>
+<table>
+<thead>
+<tr>
+<th>Fecha</th>
+<th>Usuario</th>
+<th>Campo Modificado</th>
+<th>Valor Anterior</th>
+<th>Nuevo Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>15/05/2023</td>
+<td>María Gómez</td>
+<td>Uso del Suelo</td>
+<td>Habitacional</td>
+<td>Comercial</td>
+</tr>
+<tr>
+<td>10/03/2023</td>
+<td>Carlos Ruiz</td>
+<td>Valor Catastral</td>
+<td>$1,100,000.00</td>
+<td>$1,250,000.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Módulo de Catastro - Historial de Cambios (2.html) -->
+<div class="module-container" id="historial-cambios">
+<div class="module-header">
+<h2><i class="fas fa-history" style="color: var(--info);"></i> Historial de Cambios</h2>
+<span class="badge badge-catastro">Catastro</span>
+</div>
+<div class="form-grid">
+<label>Filtrar por:</label>
+<div style="display: flex; gap: 0.5rem;">
+<select style="padding: 0.5rem; flex: 1;">
+<option>Todos los predios</option>
+<option>Predio específico</option>
+</select>
+<input disabled="" placeholder="Clave catastral..." style="padding: 0.5rem; flex: 2;" type="text"/>
+</div>
+<label>Tipo de cambio:</label>
+<select style="padding: 0.5rem; width: 100%;">
+<option>Todos los cambios</option>
+<option>Modificación de datos</option>
+<option>Cambio de propietario</option>
+<option>Ajuste de valor</option>
+</select>
+<label>Rango de fechas:</label>
+<div style="display: flex; gap: 0.5rem;">
+<input style="padding: 0.5rem; flex: 1;" type="date"/>
+<span style="display: flex; align-items: center;">a</span>
+<input style="padding: 0.5rem; flex: 1;" type="date"/>
+</div>
+</div>
+<button class="btn btn-primary" style="margin-top: 1rem;">
+<i class="fas fa-filter"></i> Aplicar Filtros
+                </button>
+<div class="table-container" style="margin-top: 2rem;">
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+<h4>Registro de Cambios</h4>
+<div>
+<span style="margin-right: 1rem;">Total de cambios: 1,248</span>
+<button class="btn btn-outline">
+<i class="fas fa-file-excel"></i> Exportar
+                            </button>
+</div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Fecha</th>
+<th>Predio</th>
+<th>Tipo de Cambio</th>
+<th>Usuario</th>
+<th>Detalles</th>
+<th>Acciones</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>15/06/2023 09:45</td>
+<td>U-4821-15</td>
+<td>Modificación de datos</td>
+<td>Juan Pérez</td>
+<td>Cambio en uso de suelo: Habitacional → Comercial</td>
+<td>
+<button class="btn btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">
+<i class="fas fa-eye"></i> Detalles
+                                    </button>
+</td>
+</tr>
+<tr>
+<td>14/06/2023 14:30</td>
+<td>R-6723-09</td>
+<td>Cambio de propietario</td>
+<td>María Gómez</td>
+<td>Nuevo propietario: María García López</td>
+<td>
+<button class="btn btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">
+<i class="fas fa-eye"></i> Detalles
+                                    </button>
+</td>
+</tr>
+<tr>
+<td>10/06/2023 11:15</td>
+<td>U-1245-678</td>
+<td>Ajuste de valor</td>
+<td>Carlos Ruiz</td>
+<td>Valor actualizado: $1,100,000 → $1,250,000</td>
+<td>
+<button class="btn btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">
+<i class="fas fa-eye"></i> Detalles
+                                    </button>
+</td>
+</tr>
+</tbody>
+</table>
+<div style="display: flex; justify-content: center; margin-top: 1rem;">
+<button class="btn btn-outline" style="margin: 0 0.5rem;">
+<i class="fas fa-chevron-left"></i>
+</button>
+<button class="btn btn-outline active" style="margin: 0 0.5rem;">1</button>
+<button class="btn btn-outline" style="margin: 0 0.5rem;">2</button>
+<button class="btn btn-outline" style="margin: 0 0.5rem;">3</button>
+<span style="margin: 0 0.5rem; display: flex; align-items: center;">...</span>
+<button class="btn btn-outline" style="margin: 0 0.5rem;">10</button>
+<button class="btn btn-outline" style="margin: 0 0.5rem;">
+<i class="fas fa-chevron-right"></i>
+</button>
+</div>
+</div>
+</div>
+<!-- Módulo de Catastro - Reportes Catastrales (3.html) -->
+<div class="module-container" id="reportes-catastrales">
+<div class="module-header">
+<h2><i class="fas fa-chart-bar" style="color: var(--info);"></i> Reportes Catastrales</h2>
+<span class="badge badge-catastro">Catastro</span>
+</div>
+<div style="display: grid; grid-template-columns: 1fr 2fr; gap: 1.5rem;">
+<!-- Panel de categorías de reportes -->
+<div class="card">
+<div class="card-header">
+<div class="table-title">Categorías de Reportes</div>
+</div>
+<div style="padding: 1rem;">
+<div class="nav-item" onclick="selectReportCategory('inventario')" style="border-left: none; margin-bottom: 0.5rem;">
+<i class="fas fa-clipboard-list"></i>
+<span>Inventario Predial</span>
+</div>
+<div class="nav-item" onclick="selectReportCategory('estadisticas')" style="border-left: none; margin-bottom: 0.5rem;">
+<i class="fas fa-chart-pie"></i>
+<span>Estadísticas</span>
+</div>
+<div class="nav-item" onclick="selectReportCategory('fiscal')" style="border-left: none; margin-bottom: 0.5rem;">
+<i class="fas fa-file-invoice-dollar"></i>
+<span>Fiscales</span>
+</div>
+<div class="nav-item" onclick="selectReportCategory('oficiales')" style="border-left: none; margin-bottom: 0.5rem;">
+<i class="fas fa-file-alt"></i>
+<span>Oficiales</span>
+</div>
+<div class="nav-item" onclick="selectReportCategory('personalizados')" style="border-left: none;">
+<i class="fas fa-cog"></i>
+<span>Personalizados</span>
+</div>
+</div>
+</div>
+<!-- Panel de reportes disponibles -->
+<div class="card">
+<div class="card-header">
+<div class="table-title">Reportes Disponibles</div>
+<div class="search-bar" style="width: 200px;">
+<i class="fas fa-search"></i>
+<input placeholder="Buscar reportes..." type="text"/>
+</div>
+</div>
+<div style="padding: 1rem;">
+<!-- Reportes de Inventario Predial (categoría por defecto) -->
+<div class="report-category" id="inventario-reports">
+<div class="report-item">
+<div>
+<h4 style="margin-bottom: 0.5rem;">Listado General de Predios</h4>
+<p style="color: #777; font-size: 0.9rem;">Listado completo de todos los predios registrados en el sistema con sus datos básicos.</p>
+</div>
+<button class="btn btn-primary">
+<i class="fas fa-download"></i> Generar
+                                    </button>
+</div>
+<div class="report-item">
+<div>
+<h4 style="margin-bottom: 0.5rem;">Predios por Colonia</h4>
+<p style="color: #777; font-size: 0.9rem;">Listado de predios agrupados por colonia o zona.</p>
+</div>
+<button class="btn btn-primary">
+<i class="fas fa-download"></i> Generar
+                                    </button>
+</div>
+<div class="report-item">
+<div>
+<h4 style="margin-bottom: 0.5rem;">Predios con Documentación Pendiente</h4>
+<p style="color: #777; font-size: 0.9rem;">Predios que requieren documentación adicional o actualización.</p>
+</div>
+<button class="btn btn-primary">
+<i class="fas fa-download"></i> Generar
+                                    </button>
+</div>
+</div>
+<!-- Otras categorías (inicialmente ocultas) -->
+<div class="report-category" id="estadisticas-reports" style="display: none;">
+<!-- Contenido similar para reportes estadísticos -->
+</div>
+<div class="report-category" id="fiscal-reports" style="display: none;">
+<!-- Contenido similar para reportes fiscales -->
+</div>
+</div>
+</div>
+</div>
+<div class="card" style="margin-top: 1.5rem;">
+<div class="card-header">
+<div class="table-title">Reportes Generados Recientemente</div>
+</div>
+<table style="width: 100%;">
+<thead>
+<tr>
+<th>Fecha</th>
+<th>Nombre del Reporte</th>
+<th>Formato</th>
+<th>Tamaño</th>
+<th>Acciones</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>15/06/2023 09:30</td>
+<td>Listado General de Predios</td>
+<td>PDF</td>
+<td>2.4 MB</td>
+<td>
+<button class="btn btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">
+<i class="fas fa-download"></i> Descargar
+                                    </button>
+<button class="btn btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">
+<i class="fas fa-print"></i> Imprimir
+                                    </button>
+</td>
+</tr>
+<tr>
+<td>14/06/2023 14:15</td>
+<td>Predios Urbanos por Colonia</td>
+<td>Excel</td>
+<td>1.8 MB</td>
+<td>
+<button class="btn btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">
+<i class="fas fa-download"></i> Descargar
+                                    </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Módulo de Catastro - Alertas Catastrales (4.html) -->
+<div class="module-container" id="alertas-catastro">
+<div class="module-header">
+<h2><i class="fas fa-bell" style="color: var(--info);"></i> Alertas Catastrales</h2>
+<span class="badge badge-catastro">Catastro</span>
+</div>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+<div class="card">
+<div class="card-header">
+<div>
+<div class="card-title">Alertas Pendientes</div>
+<div class="card-value">24</div>
+</div>
+<div class="card-icon warning">
+<i class="fas fa-exclamation-triangle"></i>
+</div>
+</div>
+<div style="color: var(--danger); font-size: 0.9rem;">
+<i class="fas fa-arrow-up"></i> 15% desde la semana pasada
+                        </div>
+</div>
+<div class="card">
+<div class="card-header">
+<div>
+<div class="card-title">Alertas Resueltas</div>
+<div class="card-value">156</div>
+</div>
+<div class="card-icon success">
+<i class="fas fa-check-circle"></i>
+</div>
+</div>
+<div style="color: var(--success); font-size: 0.9rem;">
+<i class="fas fa-arrow-up"></i> 8% desde la semana pasada
+                        </div>
+</div>
+</div>
+<div class="card">
+<div class="card-header">
+<div class="table-title">Tipos de Alertas</div>
+<div class="table-actions">
+<button class="btn btn-outline">
+<i class="fas fa-filter"></i> Filtrar
+                            </button>
+<button class="btn btn-outline">
+<i class="fas fa-cog"></i> Configurar
+                            </button>
+</div>
+</div>
+<div style="padding: 1rem;">
+<div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+<button class="btn btn-outline active">Todas</button>
+<button class="btn btn-outline">Documentación</button>
+<button class="btn btn-outline">Valuación</button>
+<button class="btn btn-outline">Propietarios</button>
+<button class="btn btn-outline">Fiscales</button>
+</div>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+<div class="alert-item" style="background-color: #fff8e6; border-left: 4px solid var(--warning); padding: 1rem; border-radius: 4px;">
+<div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+<span style="font-weight: 500;">Documentación Incompleta</span>
+<span style="font-size: 0.8rem; color: #777;">Hace 2 días</span>
+</div>
+<p style="font-size: 0.9rem; margin-bottom: 0.5rem;">Predio U-4821-15 requiere escritura actualizada.</p>
+<div style="display: flex; gap: 0.5rem;">
+<button class="btn btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">
+<i class="fas fa-eye"></i> Ver
+                                    </button>
+<button class="btn btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">
+<i class="fas fa-check"></i> Resolver
+                                    </button>
+</div>
+</div>
+<div class="alert-item" style="background-color: #e6f7ff; border-left: 4px solid var(--info); padding: 1rem; border-radius: 4px;">
+<div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+<span style="font-weight: 500;">Valuación Pendiente</span>
+<span style="font-size: 0.8rem; color: #777;">Hace 5 días</span>
+</div>
+<p style="font-size: 0.9rem; margin-bottom: 0.5rem;">Predio R-6723-09 requiere actualización de valuación.</p>
+<div style="display: flex; gap: 0.5rem;">
+<button class="btn btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">
+<i class="fas fa-eye"></i> Ver
+                                    </button>
+<button class="btn btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">
+<i class="fas fa-check"></i> Resolver
+                                    </button>
+</div>
+</div>
+<div class="alert-item" style="background-color: #ffebee; border-left: 4px solid var(--danger); padding: 1rem; border-radius: 4px;">
+<div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+<span style="font-weight: 500;">Propietario Fallecido</span>
+<span style="font-size: 0.8rem; color: #777;">Hace 1 semana</span>
+</div>
+<p style="font-size: 0.9rem; margin-bottom: 0.5rem;">Predio U-1245-678 - Propietario marcado como fallecido.</p>
+<div style="display: flex; gap: 0.5rem;">
+<button class="btn btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">
+<i class="fas fa-eye"></i> Ver
+                                    </button>
+<button class="btn btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">
+<i class="fas fa-check"></i> Resolver
+                                    </button>
+</div>
+</div>
+<div class="alert-item" style="background-color: #e8f5e9; border-left: 4px solid var(--success); padding: 1rem; border-radius: 4px;">
+<div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+<span style="font-weight: 500;">Adeudo Fiscal</span>
+<span style="font-size: 0.8rem; color: #777;">Hace 3 días</span>
+</div>
+<p style="font-size: 0.9rem; margin-bottom: 0.5rem;">Predio U-4567-890 con adeudo de más de 3 años.</p>
+<div style="display: flex; gap: 0.5rem;">
+<button class="btn btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">
+<i class="fas fa-eye"></i> Ver
+                                    </button>
+<button class="btn btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">
+<i class="fas fa-check"></i> Resolver
+                                    </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="card" style="margin-top: 1.5rem;">
+<div class="card-header">
+<div class="table-title">Historial de Alertas Resueltas</div>
+<div class="table-actions">
+<button class="btn btn-outline">
+<i class="fas fa-filter"></i> Filtrar
+                            </button>
+<button class="btn btn-outline">
+<i class="fas fa-download"></i> Exportar
+                            </button>
+</div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Fecha Resolución</th>
+<th>Tipo Alerta</th>
+<th>Predio</th>
+<th>Resuelta Por</th>
+<th>Comentarios</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>14/06/2023</td>
+<td>Documentación Incompleta</td>
+<td>U-1234-567</td>
+<td>Juan Pérez</td>
+<td>Escritura actualizada</td>
+</tr>
+<tr>
+<td>13/06/2023</td>
+<td>Valuación Pendiente</td>
+<td>R-7890-123</td>
+<td>María Gómez</td>
+<td>Valuación actualizada</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Módulo de Tesorería - Impresión de Documentos (5.html) -->
+<div class="module-container" id="impresion-documentos">
+<div class="module-header">
+<h2><i class="fas fa-print" style="color: var(--success);"></i> Impresión de Documentos</h2>
+<span class="badge badge-tesoreria">Tesorería</span>
+</div>
+<div style="display: grid; grid-template-columns: 1fr 2fr; gap: 1.5rem;">
+<!-- Panel de categorías de documentos -->
+<div class="card">
+<div class="card-header">
+<div class="table-title">Tipos de Documentos</div>
+<div class="search-bar" style="width: 150px;">
+<i class="fas fa-search"></i>
+<input placeholder="Buscar..." type="text"/>
+</div>
+</div>
+<div style="padding: 1rem;">
+<div class="nav-item" onclick="selectDocumentCategory('recibos')" style="border-left: none; margin-bottom: 0.5rem;">
+<i class="fas fa-file-invoice-dollar"></i>
+<span>Recibos de Pago</span>
+</div>
+<div class="nav-item" onclick="selectDocumentCategory('certificados')" style="border-left: none; margin-bottom: 0.5rem;">
+<i class="fas fa-certificate"></i>
+<span>Certificados</span>
+</div>
+<div class="nav-item" onclick="selectDocumentCategory('oficiales')" style="border-left: none; margin-bottom: 0.5rem;">
+<i class="fas fa-file-alt"></i>
+<span>Documentos Oficiales</span>
+</div>
+<div class="nav-item" onclick="selectDocumentCategory('reportes')" style="border-left: none;">
+<i class="fas fa-chart-bar"></i>
+<span>Reportes</span>
+</div>
+</div>
+</div>
+<!-- Panel de documentos -->
+<div class="card">
+<div class="card-header">
+<div class="table-title">Recibos de Pago</div>
+<div class="search-bar" style="width: 200px;">
+<i class="fas fa-search"></i>
+<input placeholder="Buscar recibo..." type="text"/>
+</div>
+</div>
+<div style="padding: 1rem;">
+<div class="form-grid">
+<label>Buscar por:</label>
+<div style="display: flex; gap: 0.5rem;">
+<select style="padding: 0.5rem; flex: 1;">
+<option>Número de recibo</option>
+<option>Cuenta predial</option>
+<option>Nombre del contribuyente</option>
+</select>
+<input placeholder="Ingrese criterio..." style="padding: 0.5rem; flex: 2;" type="text"/>
+<button class="btn btn-primary">
+<i class="fas fa-search"></i>
+</button>
+</div>
+<label>Filtrar por fecha:</label>
+<div style="display: flex; gap: 0.5rem;">
+<input style="padding: 0.5rem; flex: 1;" type="date"/>
+<span style="display: flex; align-items: center;">a</span>
+<input style="padding: 0.5rem; flex: 1;" type="date"/>
+<button class="btn btn-outline">
+<i class="fas fa-filter"></i>
+</button>
+</div>
+</div>
+<div class="table-container" style="margin-top: 1.5rem;">
+<table>
+<thead>
+<tr>
+<th>Recibo</th>
+<th>Fecha</th>
+<th>Contribuyente</th>
+<th>Predio</th>
+<th>Monto</th>
+<th>Acciones</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>#12456</td>
+<td>15/06/2023</td>
+<td>Juan Pérez</td>
+<td>U-4821-15</td>
+<td>$1,250.00</td>
+<td>
+<button class="btn btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">
+<i class="fas fa-print"></i> Imprimir
+                                                </button>
+<button class="btn btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">
+<i class="fas fa-file-pdf"></i> PDF
+                                                </button>
+</td>
+</tr>
+<tr>
+<td>#11892</td>
+<td>15/05/2023</td>
+<td>María García</td>
+<td>R-6723-09</td>
+<td>$950.00</td>
+<td>
+<button class="btn btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">
+<i class="fas fa-print"></i> Imprimir
+                                                </button>
+<button class="btn btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">
+<i class="fas fa-file-pdf"></i> PDF
+                                                </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="card" style="margin-top: 1.5rem;">
+<div class="card-header">
+<div class="table-title">Vista Previa de Documento</div>
+<div class="table-actions">
+<button class="btn btn-primary">
+<i class="fas fa-print"></i> Imprimir
+                            </button>
+<button class="btn btn-outline">
+<i class="fas fa-file-pdf"></i> Guardar como PDF
+                            </button>
+</div>
+</div>
+<div style="padding: 1.5rem; background-color: white; border: 1px dashed #ddd; margin: 1rem;">
+<!-- Vista previa del recibo -->
+<div style="text-align: center; margin-bottom: 1.5rem;">
+<h3 style="color: var(--vino);">Municipio de San José de Iturbide</h3>
+<p style="color: var(--gris-oscuro);">Tesorería Municipal</p>
+<h4 style="margin-top: 1rem;">Recibo Oficial de Pago</h4>
+</div>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+<div>
+<p><strong>Número de Recibo:</strong> #12456</p>
+<p><strong>Fecha:</strong> 15/06/2023</p>
+<p><strong>Hora:</strong> 10:45 AM</p>
+</div>
+<div>
+<p><strong>Clave Catastral:</strong> U-4821-15</p>
+<p><strong>Contribuyente:</strong> Juan Pérez Martínez</p>
+</div>
+</div>
+<table style="width: 100%; border-collapse: collapse; margin-bottom: 1.5rem;">
+<thead>
+<tr style="background-color: var(--beige);">
+<th style="padding: 0.5rem; text-align: left;">Concepto</th>
+<th style="padding: 0.5rem; text-align: right;">Monto</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-bottom: 1px solid #eee;">
+<td style="padding: 0.5rem;">Impuesto Predial - Junio 2023</td>
+<td style="padding: 0.5rem; text-align: right;">$1,250.00</td>
+</tr>
+<tr style="border-bottom: 1px solid #eee;">
+<td style="padding: 0.5rem;">Recargos</td>
+<td style="padding: 0.5rem; text-align: right;">$120.00</td>
+</tr>
+<tr style="font-weight: bold;">
+<td style="padding: 0.5rem;">Total</td>
+<td style="padding: 0.5rem; text-align: right;">$1,370.00</td>
+</tr>
+</tbody>
+</table>
+<div style="text-align: center; margin-top: 2rem; color: #777; font-size: 0.9rem;">
+<p>Este documento es un comprobante de pago oficial del Municipio de San José de Iturbide</p>
+<p style="margin-top: 1rem;">___________________________________</p>
+<p>Firma y Sello</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Módulo de Tesorería - Reportes Oficiales -->
+<div class="module-container" id="reportes-oficiales">
+<div class="module-header">
+<h2><i class="fas fa-file-export" style="color: var(--success);"></i> Reportes Oficiales</h2>
+<span class="badge badge-tesoreria">Tesorería</span>
+</div>
+<div class="card">
+<div class="card-header">
+<div class="table-title">Reportes Obligatorios</div>
+<div class="table-actions">
+<button class="btn btn-outline">
+<i class="fas fa-question-circle"></i> Ayuda
+                    </button>
+</div>
+</div>
+<div style="padding: 1rem;">
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem;">
+<div class="report-card">
+<div style="display: flex; justify-content: space-between; align-items: center;">
+<h4 style="margin-bottom: 0.5rem;">Declaración Anual SAT</h4>
+<span class="badge" style="background-color: var(--danger); color: white;">Pendiente</span>
+</div>
+<p style="color: #777; font-size: 0.9rem; margin-bottom: 1rem;">Reporte anual de ingresos por predial para el SAT.</p>
+<div style="display: flex; gap: 0.5rem;">
+<button class="btn btn-primary" style="flex: 1;">
+<i class="fas fa-file-excel"></i> Generar
+                            </button>
+<button class="btn btn-outline" style="flex: 1;">
+<i class="fas fa-upload"></i> Enviar
+                            </button>
+</div>
+</div>
+<div class="report-card">
+<div style="display: flex; justify-content: space-between; align-items: center;">
+<h4 style="margin-bottom: 0.5rem;">Reporte Mensual SEFIPLAN</h4>
+<span class="badge" style="background-color: var(--success); color: white;">Enviado</span>
+</div>
+<p style="color: #777; font-size: 0.9rem; margin-bottom: 1rem;">Recaudación mensual para la Secretaría de Finanzas.</p>
+<div style="display: flex; gap: 0.5rem;">
+<button class="btn btn-primary" style="flex: 1;">
+<i class="fas fa-file-excel"></i> Generar
+                            </button>
+<button class="btn btn-outline" style="flex: 1;">
+<i class="fas fa-history"></i> Historial
+                            </button>
+</div>
+</div>
+<div class="report-card">
+<div style="display: flex; justify-content: space-between; align-items: center;">
+<h4 style="margin-bottom: 0.5rem;">Padrón de Contribuyentes</h4>
+<span class="badge" style="background-color: var(--warning); color: white;">Vence pronto</span>
+</div>
+<p style="color: #777; font-size: 0.9rem; margin-bottom: 1rem;">Actualización trimestral del padrón de contribuyentes.</p>
+<div style="display: flex; gap: 0.5rem;">
+<button class="btn btn-primary" style="flex: 1;">
+<i class="fas fa-file-excel"></i> Generar
+                            </button>
+<button class="btn btn-outline" style="flex: 1;">
+<i class="fas fa-calendar"></i> Programar
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="card" style="margin-top: 1.5rem;">
+<div class="card-header">
+<div class="table-title">Historial de Envíos</div>
+<div class="table-actions">
+<button class="btn btn-outline">
+<i class="fas fa-filter"></i> Filtrar
+                    </button>
+<button class="btn btn-outline">
+<i class="fas fa-download"></i> Exportar
+                    </button>
+</div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Fecha</th>
+<th>Reporte</th>
+<th>Periodo</th>
+<th>Destino</th>
+<th>Estado</th>
+<th>Acciones</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10/06/2023</td>
+<td>Reporte Mensual SEFIPLAN</td>
+<td>Mayo 2023</td>
+<td>Secretaría de Finanzas</td>
+<td><span class="badge badge-success">Aceptado</span></td>
+<td>
+<button class="btn btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">
+<i class="fas fa-eye"></i> Ver
+                            </button>
+</td>
+</tr>
+<tr>
+<td>15/05/2023</td>
+<td>Declaración Anual SAT</td>
+<td>2022</td>
+<td>SAT</td>
+<td><span class="badge badge-success">Aceptado</span></td>
+<td>
+<button class="btn btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">
+<i class="fas fa-eye"></i> Ver
+                            </button>
+</td>
+</tr>
+<tr>
+<td>05/04/2023</td>
+<td>Padrón de Contribuyentes</td>
+<td>Q1 2023</td>
+<td>SEFIPLAN</td>
+<td><span class="badge badge-warning">Pendiente revisión</span></td>
+<td>
+<button class="btn btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">
+<i class="fas fa-eye"></i> Ver
+                            </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Módulo de Documentos (Fase Futura) -->
+<div class="module-container" id="visualizacion-documentos">
+<div class="module-header">
+<h2><i class="fas fa-file-pdf" style="color: var(--danger);"></i> Visualización de Documentos</h2>
+<span class="badge badge-futuro">Fase Futura</span>
+</div>
+<div style="background-color: var(--beige); padding: 1.5rem; border-radius: 8px;">
+<div style="display: grid; grid-template-columns: 300px 1fr; gap: 1.5rem;">
+<!-- Panel de documentos -->
+<div class="card">
+<div class="card-header">
+<div class="table-title">Documentos del Predio</div>
+<div class="search-bar" style="width: 150px;">
+<i class="fas fa-search"></i>
+<input placeholder="Buscar..." type="text"/>
+</div>
+</div>
+<div style="padding: 1rem; max-height: 500px; overflow-y: auto;">
+<div style="margin-bottom: 1rem;">
+<label>Predio:</label>
+<input readonly="" style="padding: 0.5rem; width: 100%; margin-bottom: 0.5rem;" type="text" value="U-4821-15"/>
+<button class="btn btn-outline" style="width: 100%;">
+<i class="fas fa-search"></i> Cambiar Predio
+                            </button>
+</div>
+<div style="margin-bottom: 1.5rem;">
+<label>Filtrar por tipo:</label>
+<select style="padding: 0.5rem; width: 100%; margin-top: 0.5rem;">
+<option>Todos los documentos</option>
+<option>Escrituras</option>
+<option>Planes</option>
+<option>Identificación</option>
+<option>Comprobantes</option>
+</select>
+</div>
+<h4 style="margin-bottom: 1rem;">Documentos disponibles</h4>
+<div style="display: flex; flex-direction: column; gap: 0.5rem;">
+<div class="document-item active">
+<i class="fas fa-file-alt" style="margin-right: 0.5rem;"></i>
+<span>Escritura Pública #4587</span>
+</div>
+<div class="document-item">
+<i class="fas fa-file-image" style="margin-right: 0.5rem;"></i>
+<span>Plano de Construcción</span>
+</div>
+<div class="document-item">
+<i class="fas fa-id-card" style="margin-right: 0.5rem;"></i>
+<span>INE Propietario</span>
+</div>
+<div class="document-item">
+<i class="fas fa-file-invoice-dollar" style="margin-right: 0.5rem;"></i>
+<span>Recibo de Pago 2023</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Visor de documentos -->
+<div class="card">
+<div class="card-header">
+<div class="table-title">Escritura Pública #4587</div>
+<div class="table-actions">
+<button class="btn btn-outline">
+<i class="fas fa-download"></i> Descargar
+                            </button>
+<button class="btn btn-outline">
+<i class="fas fa-print"></i> Imprimir
+                            </button>
+</div>
+</div>
+<div style="height: 500px; background-color: #f9f9f9; display: flex; align-items: center; justify-content: center; color: #777;">
+<div style="text-align: center;">
+<i class="fas fa-file-pdf" style="font-size: 3rem; color: var(--danger); margin-bottom: 1rem;"></i>
+<h3 style="color: var(--danger);">Visor de Documentos</h3>
+<p>Visualización de documentos escaneados asociados a predios</p>
+<p style="margin-top: 1rem; font-size: 0.9rem;">Disponible en la próxima actualización</p>
+<!-- Miniatura de documento de ejemplo -->
+<div style="margin-top: 2rem; width: 200px; height: 280px; background-color: white; border: 1px solid #ddd; margin-left: auto; margin-right: auto; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+<div style="text-align: center; padding: 1rem;">
+<i class="fas fa-file-contract" style="font-size: 2rem; color: var(--vino); margin-bottom: 1rem;"></i>
+<p style="font-size: 0.9rem; margin-bottom: 0.5rem;">ESCRITURA PÚBLICA</p>
+<p style="font-size: 0.8rem; color: var(--vino);">No. 4587</p>
+</div>
+</div>
+</div>
+</div>
+<div style="padding: 1rem; border-top: 1px solid #eee; display: flex; justify-content: space-between;">
+<button class="btn btn-outline">
+<i class="fas fa-chevron-left"></i> Anterior
+                        </button>
+<span style="display: flex; align-items: center;">Página 1 de 5</span>
+<button class="btn btn-outline">
+                            Siguiente <i class="fas fa-chevron-right"></i>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Módulo SIG (Fase Futura) -->
+<div class="module-container" id="herramientas-sig">
+<div class="module-header">
+<h2><i class="fas fa-ruler-combined" style="color: var(--danger);"></i> Herramientas SIG</h2>
+<span class="badge badge-futuro">Fase Futura</span>
+</div>
+<div style="background-color: var(--beige); padding: 1.5rem; border-radius: 8px;">
+<div style="display: grid; grid-template-columns: 250px 1fr; gap: 1.5rem;">
+<!-- Panel de herramientas -->
+<div>
+<div class="card" style="margin-bottom: 1.5rem;">
+<div class="card-header">
+<div class="table-title">Herramientas</div>
+</div>
+<div style="padding: 1rem;">
+<button class="btn btn-outline" style="width: 100%; margin-bottom: 0.5rem; text-align: left;">
+<i class="fas fa-ruler"></i> Medir Distancia
+                            </button>
+<button class="btn btn-outline" style="width: 100%; margin-bottom: 0.5rem; text-align: left;">
+<i class="fas fa-ruler-combined"></i> Medir Área
+                            </button>
+<button class="btn btn-outline" style="width: 100%; margin-bottom: 0.5rem; text-align: left;">
+<i class="fas fa-search-plus"></i> Zoom In
+                            </button>
+<button class="btn btn-outline" style="width: 100%; margin-bottom: 0.5rem; text-align: left;">
+<i class="fas fa-search-minus"></i> Zoom Out
+                            </button>
+<button class="btn btn-outline" style="width: 100%; text-align: left;">
+<i class="fas fa-crosshairs"></i> Ir a ubicación
+                            </button>
+</div>
+</div>
+<div class="card">
+<div class="card-header">
+<div class="table-title">Capas</div>
+</div>
+<div style="padding: 1rem;">
+<div style="margin-bottom: 1rem;">
+<label style="display: flex; align-items: center;">
+<input checked="" style="margin-right: 0.5rem;" type="checkbox"/>
+<span>Límites de predios</span>
+</label>
+</div>
+<div style="margin-bottom: 1rem;">
+<label style="display: flex; align-items: center;">
+<input checked="" style="margin-right: 0.5rem;" type="checkbox"/>
+<span>Vías</span>
+</label>
+</div>
+<div style="margin-bottom: 1rem;">
+<label style="display: flex; align-items: center;">
+<input style="margin-right: 0.5rem;" type="checkbox"/>
+<span>Servicios públicos</span>
+</label>
+</div>
+<div>
+<label style="display: flex; align-items: center;">
+<input style="margin-right: 0.5rem;" type="checkbox"/>
+<span>Uso de suelo</span>
+</label>
+</div>
+</div>
+</div>
+</div>
+<!-- Mapa con herramientas -->
+<div class="card">
+<div class="card-header">
+<div class="table-title">Mapa Interactivo</div>
+<div class="table-actions">
+<button class="btn btn-outline">
+<i class="fas fa-layer-group"></i> Capas
+                            </button>
+<button class="btn btn-primary">
+<i class="fas fa-expand"></i> Pantalla completa
+                            </button>
+</div>
+</div>
+<div style="height: 500px; background-color: #eee; display: flex; align-items: center; justify-content: center; color: #777; position: relative;">
+<!-- Representación de herramientas activas -->
+<div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80%; height: 80%; border: 2px dashed var(--danger); display: flex; align-items: center; justify-content: center;">
+<div style="text-align: center;">
+<i class="fas fa-ruler-combined" style="font-size: 3rem; color: var(--danger); margin-bottom: 1rem;"></i>
+<h3 style="color: var(--danger);">Herramientas SIG</h3>
+<p>Medición de distancias, áreas y análisis espacial</p>
+<p style="margin-top: 1rem; font-size: 0.9rem;">Disponible en la próxima actualización</p>
+</div>
+</div>
+<!-- Marcadores de ejemplo -->
+<div style="position: absolute; top: 30%; left: 30%; width: 10px; height: 10px; background-color: var(--danger); border-radius: 50%;"></div>
+<div style="position: absolute; top: 30%; left: 70%; width: 10px; height: 10px; background-color: var(--danger); border-radius: 50%;"></div>
+<div style="position: absolute; top: 70%; left: 70%; width: 10px; height: 10px; background-color: var(--danger); border-radius: 50%;"></div>
+<!-- Etiqueta de medición -->
+<div style="position: absolute; top: 40%; left: 50%; background-color: white; padding: 0.25rem 0.5rem; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                            125.45 m
+                        </div>
+</div>
+<div style="padding: 1rem; border-top: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;">
+<div>
+<span style="margin-right: 1rem;">Escala: 1:1,250</span>
+<span>Coordenadas: 21.1234° N, 100.5678° W</span>
+</div>
+<button class="btn btn-outline">
+<i class="fas fa-info-circle"></i> Información
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Módulo de Catastro - Mapas Temáticos -->
+<div class="module-container" id="mapas-tematicos">
+<div class="module-header">
+<h2><i class="fas fa-map" style="color: var(--danger);"></i> Mapas Temáticos</h2>
+<span class="badge badge-futuro">Fase Futura</span>
+</div>
+<div style="background-color: var(--beige); padding: 1.5rem; border-radius: 8px;">
+<div style="display: grid; grid-template-columns: 250px 1fr; gap: 1.5rem;">
+<!-- Panel de controles -->
+<div>
+<div class="card" style="margin-bottom: 1.5rem;">
+<div class="card-header">
+<div class="table-title">Capas Temáticas</div>
+</div>
+<div style="padding: 1rem;">
+<div style="margin-bottom: 1rem;">
+<label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Uso de Suelo</label>
+<select style="padding: 0.5rem; width: 100%;">
+<option>Mostrar todos</option>
+<option>Habitacional</option>
+<option>Comercial</option>
+<option>Industrial</option>
+<option>Agrícola</option>
+</select>
+</div>
+<div style="margin-bottom: 1rem;">
+<label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Zonificación</label>
+<select style="padding: 0.5rem; width: 100%;">
+<option>Mostrar todas</option>
+<option>Centro Histórico</option>
+<option>Zona Residencial</option>
+<option>Zona Comercial</option>
+</select>
+</div>
+<div style="margin-bottom: 1rem;">
+<label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Valor Catastral</label>
+<select style="padding: 0.5rem; width: 100%;">
+<option>Mostrar rangos</option>
+<option>Menos de $500,000</option>
+<option>$500,000 - $1,000,000</option>
+<option>Más de $1,000,000</option>
+</select>
+</div>
+<button class="btn btn-primary" style="width: 100%;">
+<i class="fas fa-layer-group"></i> Aplicar Capas
+                            </button>
+</div>
+</div>
+<div class="card">
+<div class="card-header">
+<div class="table-title">Leyenda</div>
+</div>
+<div style="padding: 1rem;">
+<div style="display: flex; align-items: center; margin-bottom: 0.5rem;">
+<div style="width: 20px; height: 20px; background-color: #4CAF50; margin-right: 0.5rem;"></div>
+<span>Habitacional</span>
+</div>
+<div style="display: flex; align-items: center; margin-bottom: 0.5rem;">
+<div style="width: 20px; height: 20px; background-color: #2196F3; margin-right: 0.5rem;"></div>
+<span>Comercial</span>
+</div>
+<div style="display: flex; align-items: center; margin-bottom: 0.5rem;">
+<div style="width: 20px; height: 20px; background-color: #FFC107; margin-right: 0.5rem;"></div>
+<span>Industrial</span>
+</div>
+<div style="display: flex; align-items: center;">
+<div style="width: 20px; height: 20px; background-color: #795548; margin-right: 0.5rem;"></div>
+<span>Agrícola</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Mapa -->
+<div class="card">
+<div class="card-header">
+<div class="table-title">Mapa Temático</div>
+<div class="table-actions">
+<button class="btn btn-outline">
+<i class="fas fa-search"></i> Buscar
+                            </button>
+<button class="btn btn-outline">
+<i class="fas fa-ruler"></i> Medir
+                            </button>
+<button class="btn btn-primary">
+<i class="fas fa-print"></i> Imprimir
+                            </button>
+</div>
+</div>
+<div style="height: 500px; background-color: #eee; display: flex; align-items: center; justify-content: center; color: #777;">
+<div style="text-align: center;">
+<i class="fas fa-map-marked-alt" style="font-size: 3rem; color: var(--danger); margin-bottom: 1rem;"></i>
+<h3 style="color: var(--danger);">Mapas Temáticos</h3>
+<p>Visualización de capas temáticas por uso de suelo, zonificación y valor catastral</p>
+<p style="margin-top: 1rem; font-size: 0.9rem;">Disponible en la próxima actualización</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Módulo de Catastro - Evolución de Valores -->
+<div class="module-container" id="evolucion-valores">
+<div class="module-header">
+<h2><i class="fas fa-chart-line" style="color: var(--danger);"></i> Evolución de Valores</h2>
+<span class="badge badge-futuro">Fase Futura</span>
+</div>
+<div style="background-color: var(--beige); padding: 1.5rem; border-radius: 8px;">
+<div class="form-grid">
+<label>Seleccionar Predio:</label>
+<div>
+<input placeholder="Buscar por clave catastral..." style="padding: 0.5rem; width: 100%;" type="text"/>
+<button class="btn btn-outline" style="margin-top: 0.5rem;">
+<i class="fas fa-search"></i> Buscar
+                    </button>
+</div>
+<label>Rango de años:</label>
+<div style="display: flex; gap: 0.5rem;">
+<select style="padding: 0.5rem; flex: 1;">
+<option>2018</option>
+<option>2019</option>
+<option>2020</option>
+<option selected="">2021</option>
+<option selected="">2022</option>
+<option selected="">2023</option>
+</select>
+<span style="display: flex; align-items: center;">a</span>
+<select style="padding: 0.5rem; flex: 1;">
+<option>2018</option>
+<option>2019</option>
+<option>2020</option>
+<option>2021</option>
+<option>2022</option>
+<option selected="">2023</option>
+</select>
+</div>
+<label>Tipo de gráfico:</label>
+<select style="padding: 0.5rem; width: 100%;">
+<option>Líneas</option>
+<option>Barras</option>
+<option>Área</option>
+</select>
+</div>
+<button class="btn btn-primary" style="margin-top: 1rem;">
+<i class="fas fa-chart-line"></i> Generar Gráfico
+            </button>
+<div class="card" style="margin-top: 1.5rem;">
+<div class="card-header">
+<div class="table-title">Evolución del Valor Catastral</div>
+<div class="table-actions">
+<button class="btn btn-outline">
+<i class="fas fa-download"></i> Datos
+                        </button>
+<button class="btn btn-outline">
+<i class="fas fa-print"></i> Imprimir
+                        </button>
+</div>
+</div>
+<div style="height: 400px; background-color: #f9f9f9; display: flex; align-items: center; justify-content: center; color: #777; padding: 1rem;">
+<div style="text-align: center;">
+<i class="fas fa-chart-line" style="font-size: 3rem; color: var(--danger); margin-bottom: 1rem;"></i>
+<h3 style="color: var(--danger);">Evolución de Valores Catastrales</h3>
+<p>Visualización del cambio en el valor catastral a través del tiempo</p>
+<p style="margin-top: 1rem; font-size: 0.9rem;">Disponible en la próxima actualización</p>
+<!-- Gráfico de ejemplo estático -->
+<div style="margin-top: 2rem; position: relative; height: 200px; width: 100%; border-bottom: 1px solid #ddd; border-left: 1px solid #ddd;">
+<div style="position: absolute; bottom: 0; left: 10%; width: 80%; height: 30%; background-color: rgba(114, 47, 55, 0.3);"></div>
+<div style="position: absolute; bottom: 0; left: 30%; width: 80%; height: 60%; background-color: rgba(114, 47, 55, 0.5);"></div>
+<div style="position: absolute; bottom: 0; left: 50%; width: 80%; height: 80%; background-color: rgba(114, 47, 55, 0.7);"></div>
+<div style="position: absolute; bottom: 0; left: 70%; width: 80%; height: 100%; background-color: var(--vino);"></div>
+<div style="position: absolute; bottom: -25px; left: 10%;">2020</div>
+<div style="position: absolute; bottom: -25px; left: 30%;">2021</div>
+<div style="position: absolute; bottom: -25px; left: 50%;">2022</div>
+<div style="position: absolute; bottom: -25px; left: 70%;">2023</div>
+<div style="position: absolute; left: -30px; bottom: 30%;">$800k</div>
+<div style="position: absolute; left: -30px; bottom: 60%;">$1.2M</div>
+<div style="position: absolute; left: -30px; bottom: 80%;">$1.6M</div>
+<div style="position: absolute; left: -30px; bottom: 100%;">$2.0M</div>
+</div>
+</div>
+</div>
+</div>
+<div class="table-container" style="margin-top: 1.5rem;">
+<h4>Detalle de Valuaciones</h4>
+<table>
+<thead>
+<tr>
+<th>Año</th>
+<th>Valor Catastral</th>
+<th>% Cambio</th>
+<th>Fecha Actualización</th>
+<th>Responsable</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2023</td>
+<td>$1,850,000.00</td>
+<td>+15.6%</td>
+<td>15/01/2023</td>
+<td>Carlos Ruiz</td>
+</tr>
+<tr>
+<td>2022</td>
+<td>$1,600,000.00</td>
+<td>+10.3%</td>
+<td>20/01/2022</td>
+<td>María Gómez</td>
+</tr>
+<tr>
+<td>2021</td>
+<td>$1,450,000.00</td>
+<td>+8.2%</td>
+<td>18/01/2021</td>
+<td>Juan Pérez</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+        // Función para mostrar/ocultar submenús
+        function toggleSubmenu(menu) {
+            const submenu = document.getElementById(`${menu}-submenu`);
+            submenu.classList.toggle('show');
+            
+            // Rotar el ícono de flecha
+            const arrow = document.querySelector(`.nav-item[onclick="toggleSubmenu('${menu}')"] i.fa-chevron-down`);
+            arrow.classList.toggle('rotate');
+        }
+        
+        // Función para mostrar módulos
+        function showModule(moduleId) {
+            // Oculta todos los módulos
+            document.querySelectorAll('.module-container').forEach(module => {
+                module.classList.remove('active');
+            });
+            
+            // Muestra el módulo seleccionado
+            document.getElementById(moduleId).classList.add('active');
+            
+            // Actualiza el menú activo
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Marca como activo el ítem del menú correspondiente
+            const navItem = document.querySelector(`.nav-item[onclick="showModule('${moduleId}')"]`);
+            if (navItem) {
+                navItem.classList.add('active');
+            } else {
+                // Si es un submenú, marca como activo el padre
+                const submenuItem = document.querySelector(`.submenu .nav-item[onclick="showModule('${moduleId}')"]`);
+                if (submenuItem) {
+                    const parentItem = submenuItem.closest('.submenu').previousElementSibling;
+                    parentItem.classList.add('active');
+                }
+            }
+        }
+        
+        // Función para generar clave catastral
+        function generarClave() {
+            const tipo = document.querySelector('#registro-predios select').value === 'Urbano' ? 'U' : 'R';
+            const numero = Math.floor(Math.random() * 9000) + 1000;
+            const digito = Math.floor(Math.random() * 90) + 10;
+            document.getElementById('clave-catastral').value = `${tipo}-${numero}-${digito}`;
+        }
+        
+        // Funciones para los módulos específicos
+        function selectReportCategory(category) {
+            // Oculta todas las categorías
+            document.querySelectorAll('.report-category').forEach(el => {
+                el.style.display = 'none';
+            });
+            
+            // Muestra la categoría seleccionada
+            document.getElementById(`${category}-reports`).style.display = 'block';
+        }
+        
+        function selectDocumentCategory(category) {
+            // Lógica para cambiar entre categorías de documentos
+            console.log(`Categoría seleccionada: ${category}`);
+        }
+        
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mostrar dashboard por defecto
+            document.getElementById('dashboard').classList.add('active');
+        });
+    </script>
+
+<script>
+function previewImagenPredio() {
+  const input = document.getElementById('imagen-predio');
+  const preview = document.getElementById('preview-imagen');
+  const hiddenInput = document.getElementById('imagen-base64');
+  preview.innerHTML = '';
+  hiddenInput.value = '';
+
+  const file = input.files[0];
+  if (file && file.type.startsWith('image/')) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const dataURL = e.target.result;
+      localStorage.setItem('imagenPredio', dataURL);
+      hiddenInput.value = dataURL;
+
+      const img = document.createElement('img');
+      img.src = dataURL;
+      img.style.maxWidth = '100%';
+      img.style.border = '1px solid #ddd';
+      img.style.borderRadius = '8px';
+      preview.appendChild(img);
+    };
+    reader.readAsDataURL(file);
+  }
+}
+
+function eliminarImagen() {
+  const input = document.getElementById('imagen-predio');
+  const preview = document.getElementById('preview-imagen');
+  const hiddenInput = document.getElementById('imagen-base64');
+  input.value = '';
+  preview.innerHTML = '<p style="color: #777;">Imagen eliminada. Puedes subir otra si lo deseas.</p>';
+  hiddenInput.value = '';
+  localStorage.removeItem('imagenPredio');
+}
+
+function cargarImagenSiExiste() {
+  const dataURL = localStorage.getItem('imagenPredio');
+  const preview = document.getElementById('preview-imagen');
+  const hiddenInput = document.getElementById('imagen-base64');
+  if (dataURL) {
+    const img = document.createElement('img');
+    img.src = dataURL;
+    img.style.maxWidth = '100%';
+    img.style.border = '1px solid #ddd';
+    img.style.borderRadius = '8px';
+    preview.innerHTML = '';
+    preview.appendChild(img);
+    hiddenInput.value = dataURL;
+  }
+}
+
+function guardarPredio() {
+  const clave = document.getElementById('clave-catastral').value;
+  const propietario = document.querySelector('#registro-predios input[placeholder="Buscar propietario..."]').value;
+  const superficie = document.querySelector('#registro-predios input[type="number"]').value;
+  const uso = document.querySelector('#registro-predios select:nth-of-type(2)').value;
+  const imagenBase64 = document.getElementById('imagen-base64').value;
+
+  const datos = {
+    clave_catastral: clave,
+    propietario: propietario,
+    superficie_m2: superficie,
+    uso_suelo: uso,
+    imagen_base64: imagenBase64
+  };
+
+  fetch('https://mi-backend.local/api/registrar_predio', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(datos)
+  })
+  .then(res => res.json())
+  .then(respuesta => {
+    alert('✅ Predio registrado correctamente');
+    localStorage.removeItem('imagenPredio');
+    document.getElementById('imagen-base64').value = '';
+    document.getElementById('preview-imagen').innerHTML = '';
+    document.getElementById('imagen-predio').value = '';
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    alert('❌ Hubo un problema al registrar el predio.');
+  });
+}
+
+const originalShowModule = showModule;
+showModule = function(moduleId) {
+  originalShowModule(moduleId);
+  if (moduleId === 'registro-predios') {
+    setTimeout(cargarImagenSiExiste, 100);
+  }
+};
+</script>
+</body>
+</html>
